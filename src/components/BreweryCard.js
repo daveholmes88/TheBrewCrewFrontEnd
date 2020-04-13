@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { Card } from 'react-bootstrap';
 
 class BreweryCard extends Component {
     deleteBrewery = () => {
@@ -18,14 +19,16 @@ class BreweryCard extends Component {
     render(){
         const { brewery } = this.props
         return(
-            <div>
-                <h3 onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></h3>
-                <p>{brewery.brewery_type}</p>
-                <p>{brewery.address} {brewery.city}</p>
-                <p>{brewery.state}, {brewery.zip}</p>
-                <a href={brewery.website} target='_blank' rel='noopener noreferrer'>{brewery.name}'s Website</a>
-                <p>{brewery.phone}</p>
-                <button onClick={this.deleteBrewery}>Delete Brewery</button>
+            <div class='container-fluid d-flex align-items-center col-sm-6 col-md-3 overflow-auto'>
+                <Card border='warning' style={{ height: '20rem'}}>
+                    <Card.Body>
+                        <Card.Title onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></Card.Title>
+                        <Card.Text>{brewery.address} {brewery.city}, {brewery.state}, {brewery.zip}</Card.Text>
+                        <a href={brewery.website} target='_blank' rel='noopener noreferrer'>Website</a>
+                        <Card.Text>{brewery.phone}</Card.Text>
+                        {/* <button onClick={this.deleteBrewery}>Delete Brewery</button> */}
+                </Card.Body>
+                </Card>
             </div>
         )
     }

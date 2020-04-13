@@ -1,16 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav'
-import { Navbar } from 'react-bootstrap'
+import { Navbar, Button } from 'react-bootstrap'
 
 class BrewNavbar extends React.Component {
 
     render() {
         return (
-            <Navbar bg='dark' variant='dark'>
-            <Nav className='mr-auto'>
+            <Navbar sticky='top' bg='warning' variant='warning'>
+            <Nav>
                 <Nav.Item>
-                    <Nav.Link href="/home">Home</Nav.Link>
+                    <h3 class='text-primary'>The Brew Crew</h3>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href="/home">Your Breweries</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Nav.Link href="/nearme">Near Me</Nav.Link>
@@ -18,10 +20,12 @@ class BrewNavbar extends React.Component {
                 <Nav.Item>
                     <Nav.Link href="/search">Search</Nav.Link>
                 </Nav.Item>
+            </Nav>
+            <Nav className='justify-content-end'>
                 <Nav.Item >
-                    <Nav.Link href='/login'><button onClick={this.props.handleLogout} >
+                    <Nav.Link href='/login'><Button bg='warning' variant='outline-primary' onClick={this.props.handleLogout} >
                         {localStorage.token ? "Logout" : "Login"}
-                    </button>
+                    </Button>
                     </Nav.Link>
                 </Nav.Item>
             </Nav>

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import Login from './Login';
-import BreweriesNearMe from './components/BreweriesNearMe'
-import BrewerySearch from './components/BrewerySearch'
-import BreweryShow from './components/BreweryShow'
-import NewBrewery from './components/NewBrewery'
-import Home from './components/Home'
-import BrewNavbar from './components/Navbar'
+import BreweriesNearMe from './components/BreweriesNearMe';
+import BrewerySearch from './components/BrewerySearch';
+import BreweryShow from './components/BreweryShow';
+import NewBrewery from './components/NewBrewery';
+import Home from './components/Home';
+import BrewNavbar from './components/Navbar';
+import Edit from './components/Edit';
+import history from "./history";
 
 class App extends Component {
   constructor() {
@@ -16,21 +18,14 @@ class App extends Component {
       currentUser: '',
       ratings: [],
       breweries: [],
-      showBrewery: {}
-    //   id: 6179,
-    //     name: "Off Color Brewing",
-    //     brewery_type: "micro",
-    //     address: "3925 W Dickens Ave",
-    //     city: "Chicago",
-    //     state: "Illinois",
-    //     zip: 60647,
-    //     country: "United States",
-    //     longitude: -87.7253843735564,
-    //     latitude: 41.9189269656549,
-    //     phone: "",
-    //     website: "http://www.offcolorbrewing.com"},
-    //   search: null
-     }
+      showBrewery: {},
+      search: null,
+      rating: null, 
+      notes: '', 
+      number: 0,
+      edit: {} 
+     } 
+     
   }
 
   componentDidMount() {
@@ -58,9 +53,18 @@ class App extends Component {
   }
 
   breweryShow = brewery => {
+    const rating = this.myRating(brewery)
+    if (rating.length > 0) {
     this.setState({
-      showBrewery: brewery
-    })
+      showBrewery: brewery,
+      rating: rating[0],
+      notes: rating[0].notes,
+      number: rating[0].number
+    })} else {
+      this.setState({
+        showBrewery: brewery
+      })
+    }
   }
 
   loginUser = (userObj) => {
@@ -75,22 +79,124 @@ class App extends Component {
     })
   }
 
-  refreshBrewery = (ratings) => {
-    this.setState({
-      ratings: ratings
-    })
-  }
-
   handleLogout = () => {
     this.setState({
       currentUser: ''
     })
     localStorage.clear()
   }
+
+  myRating = (brewery) => {
+    const breweryRatings = this.state.ratings.filter(rating => {
+        return rating.brewery_id === brewery.id})
+    return breweryRatings.filter(rating =>{
+        return rating.user_id === this.state.currentUser.id
+    })
+  }
+
+  setRating = (event) => {
+    this.setState({
+        number: event
+    })
+  }
+
+  noteChange = (event) => {
+    this.setState({
+        notes: event.target.value
+    })
+  }
+
+  saveRating = () => {
+    if (this.state.number !== 0) {
+      if (this.state.rating) {
+        this.editRating()
+      } else {
+        const createObj = {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                rating: this.state.number,
+                notes: this.state.notes,
+                brewery_id: this.state.showBrewery.id,
+                user_id: this.state.currentUser.id
+            })
+        }
+        fetch('http://localhost:3000/ratings', createObj)
+            .then(resp => resp.json())
+            .then(ratings => {
+                this.setState({
+                  ratings: ratings
+                })
+                history.push('/home')
+            }) 
+        }}
+        else { alert("You must rate a brewery in order to submit") }
+  }
+
+  editRating = () => {
+    const updateObj = {
+      method: 'PATCH', 
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          rating: this.state.rating.id,
+          number: this.state.number,
+          notes: this.state.notes
+      })
+    }
+    fetch(`http://localhost:3000/ratings/${this.state.rating.id}`, updateObj)
+      .then(resp => resp.json())
+      .then((ratings => {
+          this.setState({
+            ratings: ratings
+          })
+          history.push('/home')
+          }))
+      .catch(err => console.log(err))
+  }
+  
+    handleEdit = (brewery) => {
+      this.setState({
+        edit: brewery
+      })
+    }
+
+    handleEditChange = (event) => {
+      this.setState({
+        edit: {...this.state.edit,
+          [event.target.name]: event.target.value
+        }
+      })
+    }
+
+    editSubmit = (event) => {
+      event.preventDefault()
+      const editBrewery = {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          brewery: this.state.edit
+        })
+      }
+      fetch(`http://localhost:3000/breweries/${this.state.edit.id}`, editBrewery)
+        .then(resp => resp.json())
+        .then(data => {
+          this.setState({
+            showBrewery: data,
+            edit: {}
+          })
+          history.push('/show')
+        })
+    }
   
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div>
           <BrewNavbar handleLogout={this.handleLogout}/>
           <Switch >
@@ -106,7 +212,14 @@ class App extends Component {
             user={this.state.currentUser}
             ratings={this.state.ratings}
             brewery={this.state.showBrewery}
-            refreshBrewery={this.refreshBrewery}/>}/>
+            refreshBrewery={this.refreshBrewery}
+            rating={this.state.rating}
+            setRating={this.setRating}
+            noteChange={this.noteChange}
+            saveRating={this.saveRating}
+            number={this.state.number}
+            notes={this.state.notes}
+            handleEdit={this.handleEdit}/>}/>
           <Route exact path='/new' render={routerProps => <NewBrewery {...routerProps}
             breweryShow={this.breweryShow}/>} />
           <Route exact path='/home' render={routerProps => <Home {...routerProps}
@@ -115,6 +228,10 @@ class App extends Component {
             breweries={this.state.breweries}
             handleHomeSearch={this.handleHomeSearch}
             breweryShow={this.breweryShow}/>} />
+          <Route exact path='/edit' render={routerProps => <Edit {...routerProps}
+            brewery={this.state.edit}
+            handleEditChange={this.handleEditChange}
+            editSubmit={this.editSubmit}/>}/>
           </Switch>
         </div>
       </Router>

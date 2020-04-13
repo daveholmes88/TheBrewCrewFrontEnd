@@ -1,28 +1,7 @@
-// import React, { Component, useState } from 'react'; 
-// import ReactMapGL, { Marker } from 'react-map-gl';
-
-// function BreweriesNearMe() {
-//         const [viewport, setViewport] = useState({
-//             width: 650,
-//             height: 500,
-//             latitude: 37.7577,
-//             longitude: -122.4376,
-//             zoom: 8
-//           });
-//           const mapboxToken = 'pk.eyJ1IjoiZGF2ZWhvbG1lczg4IiwiYSI6ImNrOG5yYjY1MDExZnYzbHBoMHpvMGF5amkifQ.dsX_hdTiU-7GeB3vvGbS6Q'
-//         return (
-//             <div>
-//                 <ReactMapGL {...viewport}
-//                     mapboxApiAccessToken={mapboxToken}
-//                     onViewportChange={viewport => setViewport(viewport)}>markers
-//                 </ReactMapGL>
-//             </div>
-//         )
-// }
-
 import React, { Component } from "react";
-import ReactMapGL, { GeolocateControl, Marker } from "react-map-gl";
-import { Link } from 'react-router-dom'
+import ReactMapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
+import { Link } from 'react-router-dom';
+import { Card, Form, Button } from 'react-bootstrap';
 
 class BreweriesNearMe extends Component {
   constructor() {
@@ -30,15 +9,17 @@ class BreweriesNearMe extends Component {
     super()
       this.state = {
       viewport: {}, 
-      search: '',
-      breweries: []
+      searchAddress: '',
+      breweries: [],
+      selected: null,
+      searchName: ''
     }
   }
   
 
   handleChange = event => {
     this.setState({
-        search: event.target.value
+        searchAddress: event.target.value
     })
   }
 
@@ -50,7 +31,7 @@ class BreweriesNearMe extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        location: this.state.search
+        location: this.state.searchAddress
       })
     }
     fetch('http://localhost:3000/descriptions', newLocation)
@@ -61,7 +42,7 @@ class BreweriesNearMe extends Component {
           viewport: {
             latitude: data.location[0],
             longitude: data.location[1],
-            zoom: 10
+            zoom: 13
           }
         }))
   }
@@ -86,7 +67,7 @@ class BreweriesNearMe extends Component {
               viewport: {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
-              zoom: 10
+              zoom: 13
               },
               breweries: data.breweries
             })) 
@@ -94,52 +75,89 @@ class BreweriesNearMe extends Component {
   }
 
   renderBreweries = () => {
-    return this.state.breweries.map(brewery => {
+    let breweries = this.state.breweries
+    if (this.state.searchName) {
+      breweries = breweries.filter(brewery => {
+          return brewery.name.toLowerCase().includes(this.state.searchName.toLowerCase())
+      })}
+    return breweries.map(brewery => {
       return (
-      <div>
-        <h3 onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></h3>
-        <p>{brewery.brewery_type}</p>
-        <p>{brewery.address} {brewery.city}</p>
-        <p>{brewery.state}, {brewery.zip}</p>
-        <a href={brewery.website} target='_blank' rel='noopener noreferrer'>{brewery.name}'s Website</a>
-        <p>{brewery.phone}</p>
-      </div>
+        <Card border='warning' >
+          <Card.Body>
+            <Card.Title onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></Card.Title>
+            <p>{brewery.brewery_type}</p>
+            <Card.Text>{brewery.address} {brewery.city}, {brewery.state}, {brewery.zip}</Card.Text>
+            <a href={brewery.website} target='_blank' rel='noopener noreferrer'>{brewery.name}'s Website</a>
+            <p>{brewery.phone}</p>
+          </Card.Body>
+        </Card>
     )})
   }
 
   renderMarkers = () => {
     return this.state.breweries.map(brewery => {
-      return <Marker latitude={brewery.latitude} longitude={brewery.longitude}>
-        <div>{brewery.name}</div>
+      return <Marker key={brewery.id} latitude={brewery.latitude} longitude={brewery.longitude}>
+        <button class='marker-btn' onClick={() => this.setState({selected: brewery})}>
+          <img src='../../beer-mug.png' alt='brewery icon' />
+        </button>
       </Marker>
     })
   }
 
+  handleName = (event) => {
+    this.setState({
+      searchName: event.target.value
+    })
+  }
+ 
   render() {
     const mapboxToken = 'pk.eyJ1IjoiZGF2ZWhvbG1lczg4IiwiYSI6ImNrOG5yYjY1MDExZnYzbHBoMHpvMGF5amkifQ.dsX_hdTiU-7GeB3vvGbS6Q'
-    const {viewport} = this.state;
-    console.log(this.props)
+    const { viewport, selected } = this.state;
+    console.log(this.state.searchName)
     return (
-        <div>
-        <form onSubmit={this.onSubmit}>
-            <label>Address</label>
-            <input type='input' onChange={this.handleChange} value={this.state.search}></input>
-            <input type='submit' value='search' />
-
-        </form>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-md-6 col-sm-12' id='left-container'> 
+            <br></br>   
+            <br></br>     
+            <br></br> 
+              <Form inline='true'>
+                <Form.Group>
+                  <Form.Label>Location</Form.Label>
+                  <Form.Control type='text' onChange={this.handleChange} value={this.state.searchAddress}></Form.Control>
+                </Form.Group>
+                <Button onClick={this.onSubmit} variant='primary' type='submit' value='Search'>Search</Button>
+              </Form>
       <ReactMapGL {...viewport}
+        mapStyle='mapbox://styles/daveholmes88/ck8yhbgr259vz1itbn285ffo0'
         mapboxApiAccessToken={mapboxToken}
-        width="50vw"
-        height="50vh"
+        width="40vw"
+        height="100vh"
         onViewportChange={viewport => this.setState({viewport})}>
         <GeolocateControl
           positionOptions={{enableHighAccuracy: true}}
           trackUserLocation={true}
         />
         {this.state.breweries.length > 0 ? this.renderMarkers(): null}
+        {this.state.selected ? 
+        <Popup 
+          latitude={selected.latitude} 
+          longitude={selected.longitude}
+          onClose={() => this.setState({selected: null})}>
+          {selected.name}
+        </Popup>: null}
       </ReactMapGL>
-      {this.state.breweries.length > 0 ? this.renderBreweries() : null}
-      {this.state.breweries.length > 0 ? <h3><Link to='/new'>Create A New Brewery</Link></h3>  : null}
+      </div>
+        <div class='col-md-6' id='right-container'>
+          <Form inline='true'>
+              <Form.Label>Brewery Name</Form.Label>
+              <Form.Control type='text' placeholder='Brewery Name' onChange={this.handleName} value={this.state.name}></Form.Control>
+          </Form>
+          <br></br>
+          {this.state.breweries.length > 0 ? this.renderBreweries() : null}
+          {this.state.breweries.length > 0 ? <h3><Link to='/new'>Create A New Brewery</Link></h3>  : null}
+        </div>
+      </div>
       </div>
     );
   }

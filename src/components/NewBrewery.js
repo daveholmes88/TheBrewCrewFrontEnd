@@ -1,4 +1,5 @@
 import React, { Component } from 'react'; 
+import { Form, Button } from 'react-bootstrap';
 
 class NewBrewery extends Component {
     constructor() {
@@ -9,7 +10,7 @@ class NewBrewery extends Component {
             address: '4805 N Wolcott ave', 
             city: 'Chicago', 
             state: 'Illinois',
-            postal_code: '60640', 
+            zip_code: '60640', 
             country: 'United States', 
             website: 'www.thisisawebsite.com', 
             phone_number: '8475283167' 
@@ -17,6 +18,7 @@ class NewBrewery extends Component {
     }
 
     onChange = event => {
+        debugger
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -41,37 +43,48 @@ class NewBrewery extends Component {
 
     render() {
         return(
-            <div>
-                <form onChange={this.onChange} onSubmit={this.onSubmit}>
-                    <label>Name:</label>
-                    <input name='name' type='text' value={this.state.name}></input>
-                    <br></br>
-                    <label>Kind</label>
-                    <input name = 'kind' type='text' value={this.state.kind}></input>
-                    <br></br>
-                    <label>Address</label>
-                    <input name='address' type='text' value={this.state.address}></input>
-                    <br></br>
-                    <label>City</label>
-                    <input name='city' type='text' value={this.state.city}></input>
-                    <br></br>
-                    <label>State</label>
-                    <input name='state' type='text' value={this.state.state}></input>
-                    <br></br>
-                    <label>Postal Code</label>
-                    <input name='postal_code' type='text' value={this.state.postal_code}></input>
-                    <br></br>
-                    <label>Country</label>
-                    <input name='country' type='text' value={this.state.country}></input>
-                    <br></br>
-                    <label>Website</label>
-                    <input name='website' type='text' value={this.state.website}></input>
-                    <br></br>
-                    <label>Phone Number</label>
-                    <input name='phone_number' type='text' value={this.state.phone_number}></input>
-                    <br></br>
-                    <input type='submit' value='Add Brewery' />
-                </form>
+            <div class='container'>
+                <Form onChange={this.onChange}>
+                    <Form.Group>
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control name='name' type="text" placeholder="Brewery Name" value={this.state.name} />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Type</Form.Label>
+                        <Form.Control name='kind' type="text" placeholder="Brewery Type" value={this.state.kind} />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Address</Form.Label>
+                        <Form.Control name='address' type="text" placeholder="Brewery Address" value={this.state.address} />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>City</Form.Label>
+                        <Form.Control name='city' type="text" placeholder="Brewery City" value={this.state.city} />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>State</Form.Label>
+                        <Form.Control name='state' type="text" placeholder="Brewery State" value={this.state.state} />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Zip Code</Form.Label>
+                        <Form.Control name='zip_code' type="text" placeholder="Brewery Zip" value={this.state.zip_code}/>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Country</Form.Label>
+                        <Form.Control name='country' type="text" placeholder="Brewery Country" value={this.state.country} />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Website</Form.Label>
+                        <Form.Control name='website'type="text" placeholder="Brewery Website" value={this.state.website}/>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Phone Number</Form.Label>
+                        <Form.Control name='phone_number' type="text" placeholder="Brewery Phone Number" value={this.state.phone_number} />
+                    </Form.Group>
+                    <Button onClick={this.onSubmit} variant="primary" type="submit">
+                        Add Brewery
+                    </Button>
+                </Form>
             </div>
         )
     }

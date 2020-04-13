@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Table, Button, Form } from 'react-bootstrap';
+import StarRating from './StarRating.jsx';
 
 class Home extends Component {
     constructor() {
@@ -7,25 +9,10 @@ class Home extends Component {
         this.state = {
             myBreweries: [],
             myRatings: [],
-            search: ''
+            search: '',
+            searchName: null
         }
     }
-
-    // findMyInfo = () => {
-    //     const myRatings = this.props.ratings.filter(rating => {
-    //         return this.props.user.id === rating.user_id
-    //     })
-    //     const breweryId = myRatings.map(rating => {
-    //         return rating.brewery_id
-    //     })
-    //     const breweries = this.props.breweries.filter(brewery => {
-    //         return breweryId.includes(brewery.id)
-    //     })
-    //     this.setState({
-    //         myBreweries: breweries,
-    //         myRatings: myRatings
-    //     })
-    // }
 
     renderBreweries = () => {
         const myRatings = this.props.ratings.filter(rating => {
@@ -34,19 +21,27 @@ class Home extends Component {
         const breweryId = myRatings.map(rating => {
             return rating.brewery_id
         })
-        const breweries = this.props.breweries.filter(brewery => {
+        let breweries = this.props.breweries.filter(brewery => {
             return breweryId.includes(brewery.id)
         })
+        if (this.state.searchName) {
+            breweries = breweries.filter(brewery => {
+                return brewery.name.toLowerCase().includes(this.state.searchName.toLowerCase())
+            })
+        }
         return breweries.map(brewery => {
             const rating = myRatings.filter(rating => rating.brewery_id === brewery.id)
             const allRatings = this.props.ratings.filter(rating => rating.brewery_id === brewery.id)
             const allNumbers = allRatings.map(rating => rating.number)
             const averageRating = allNumbers.reduce((a,b) => a + b, 0) / allNumbers.length
             return(
-                <tr>
+                <tr key={brewery.id}>
                     <td onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></td>
                     <td>{brewery.brewery_type}</td>
-                    <td>{rating[0].number}</td>
+                    <td><StarRating
+                                    numberOfStars="5"
+                                    currentRating={rating[0].number}
+                                /></td>
                     <td>{averageRating}</td>
                     <td>{brewery.address}</td>
                     <td>{brewery.city}</td>
@@ -74,31 +69,50 @@ class Home extends Component {
         }
     }
 
+    handleName = (event) => {
+        this.setState({
+          searchName: event.target.value
+        })
+      }
+
     render() {
         return(
-            <div>
+            <div class='container'>
+                <div class='row' >
+                    <div class='col-sm-6' >
                 <Link to='/nearme' >
-                    <button>Breweries Near Me</button>
+                    <Button variant='primary'>Breweries Near Me</Button>
                 </Link>
-                    <form onSubmit={this.handleSearch}>
-                        <label>Location</label>
-                        <input type='text' onChange={this.handleChange} value={this.state.search}/>
-                        <input type='submit' />
-                    </form>
-                <table style={{width: '100%'}}>
+                    <Form inline='true'>
+                        <Form.Group>
+                            <Form.Label>Location</Form.Label>
+                            <Form.Control type='text' onChange={this.handleChange} value={this.state.search} placeholder='City or State'/>
+                        </Form.Group>
+                        <Button variant='primary' type='submit' onClick={this.handleSearch} >Search</Button>
+                    </Form>
+                    </div>
+                    <div class='col-sm-6' >
+                        <br></br>
+                        <Form inline='true'>
+                            <Form.Label>Brewery Name</Form.Label>
+                            <Form.Control type='text' placeholder='Brewery Name' onChange={this.handleName} value={this.state.name}></Form.Control>
+                        </Form>
+                    </div>
+                </div>
+                <Table variant='light' bordered='true' style={{width: '100%'}}>
                     <tbody>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>My Rating</th>
-                        <th>Composite Rating</th>
-                        <th>Address</th>
-                        <th>City</th>
-                        <th>State</th>
-                    </tr>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>My Rating</th>
+                            <th>Global Rating</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>State</th>
+                        </tr>
                         {this.renderBreweries()}
                     </tbody>
-                </table>
+                </Table>
             </div>
         )
     }
