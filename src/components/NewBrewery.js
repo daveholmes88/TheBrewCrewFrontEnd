@@ -5,20 +5,19 @@ class NewBrewery extends Component {
     constructor() {
         super()
         this.state = {
-            name: 'Brewery Dave',
+            name: 'Bobbing Bobber Brewing Company',
             kind: 'micro', 
-            address: '4805 N Wolcott ave', 
-            city: 'Chicago', 
-            state: 'Illinois',
-            zip_code: '60640', 
+            address: '900 MN-15', 
+            city: 'Hutchinson', 
+            state: 'Minnesota',
+            zip_code: '55350', 
             country: 'United States', 
-            website: 'www.thisisawebsite.com', 
-            phone_number: '8475283167' 
+            website: 'https://www.bobbingbobber.com/', 
+            phone_number: '3204554999' 
         }
     }
 
     onChange = event => {
-        debugger
         this.setState({
             [event.target.name]: event.target.value
         })

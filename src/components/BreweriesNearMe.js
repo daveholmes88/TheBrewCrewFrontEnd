@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 import ReactMapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
 import { Link } from 'react-router-dom';
-import { Card, Form, Button } from 'react-bootstrap';
+import { Card, Form, Button, Spinner, Container, Row, Col } from 'react-bootstrap';
 
 class BreweriesNearMe extends Component {
   constructor() {
-    console.log(navigator.geolocation)
     super()
       this.state = {
-      viewport: {}, 
-      searchAddress: '',
-      breweries: [],
-      selected: null,
-      searchName: ''
+        viewport: {}, 
+        searchAddress: '',
+        breweries: [],
+        selected: null,
+        searchName: ''
     }
   }
   
@@ -104,7 +103,7 @@ class BreweriesNearMe extends Component {
     })
   }
 
-  handleName = (event) => {
+  handleName = event => {
     this.setState({
       searchName: event.target.value
     })
@@ -113,11 +112,14 @@ class BreweriesNearMe extends Component {
   render() {
     const mapboxToken = 'pk.eyJ1IjoiZGF2ZWhvbG1lczg4IiwiYSI6ImNrOG5yYjY1MDExZnYzbHBoMHpvMGF5amkifQ.dsX_hdTiU-7GeB3vvGbS6Q'
     const { viewport, selected } = this.state;
-    console.log(this.state.searchName)
     return (
-        <div class='container'>
-          <div class='row'>
-            <div class='col-md-6 col-sm-12' id='left-container'> 
+        <Container>
+          {this.state.breweries.length === 0 ? 
+            <Spinner animation="border" role="status" variant='warning'>
+              <span className="sr-only">Loading...</span>
+            </Spinner>: null}
+          <Row md={2}>
+            <Col id='left-container'> 
             <br></br>   
             <br></br>     
             <br></br> 
@@ -128,37 +130,37 @@ class BreweriesNearMe extends Component {
                 </Form.Group>
                 <Button onClick={this.onSubmit} variant='primary' type='submit' value='Search'>Search</Button>
               </Form>
-      <ReactMapGL {...viewport}
-        mapStyle='mapbox://styles/daveholmes88/ck8yhbgr259vz1itbn285ffo0'
-        mapboxApiAccessToken={mapboxToken}
-        width="40vw"
-        height="100vh"
-        onViewportChange={viewport => this.setState({viewport})}>
-        <GeolocateControl
-          positionOptions={{enableHighAccuracy: true}}
-          trackUserLocation={true}
-        />
-        {this.state.breweries.length > 0 ? this.renderMarkers(): null}
-        {this.state.selected ? 
-        <Popup 
-          latitude={selected.latitude} 
-          longitude={selected.longitude}
-          onClose={() => this.setState({selected: null})}>
-          {selected.name}
-        </Popup>: null}
-      </ReactMapGL>
-      </div>
-        <div class='col-md-6' id='right-container'>
-          <Form inline='true'>
-              <Form.Label>Brewery Name</Form.Label>
-              <Form.Control type='text' placeholder='Brewery Name' onChange={this.handleName} value={this.state.name}></Form.Control>
-          </Form>
-          <br></br>
-          {this.state.breweries.length > 0 ? this.renderBreweries() : null}
-          {this.state.breweries.length > 0 ? <h3><Link to='/new'>Create A New Brewery</Link></h3>  : null}
-        </div>
-      </div>
-      </div>
+              <ReactMapGL {...viewport}
+                mapStyle='mapbox://styles/daveholmes88/ck8yhbgr259vz1itbn285ffo0'
+                mapboxApiAccessToken={mapboxToken}
+                width="40vw"
+                height="100vh"
+                onViewportChange={viewport => this.setState({viewport})}>
+                <GeolocateControl
+                  positionOptions={{enableHighAccuracy: true}}
+                  trackUserLocation={true}
+                />
+                {this.state.breweries.length > 0 ? this.renderMarkers(): null}
+                {this.state.selected ? 
+                  <Popup 
+                    latitude={selected.latitude} 
+                    longitude={selected.longitude}
+                    onClose={() => this.setState({selected: null})}>
+                    {selected.name}
+                  </Popup> : null}
+              </ReactMapGL>
+            </Col>
+            <Col id='right-container'>
+              <Form inline='true'>
+                <Form.Label>Brewery Name</Form.Label>
+                <Form.Control type='text' placeholder='Brewery Name' onChange={this.handleName} value={this.state.name}></Form.Control>
+              </Form>
+              <br></br>
+              {this.state.breweries.length > 0 ? this.renderBreweries() : null}
+              {this.state.breweries.length > 0 ? <h3><Link to='/new'>Create A New Brewery</Link></h3>  : null}
+            </Col>
+          </Row>
+        </Container>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Button, Form } from 'react-bootstrap';
-import StarRating from './StarRating.jsx';
+import { Table, Button, Form, Container, Row, Col } from 'react-bootstrap';
+import StarRatingConstant from './StarRatingConstant.jsx';
 
 class Home extends Component {
     constructor() {
@@ -36,16 +36,16 @@ class Home extends Component {
             const averageRating = allNumbers.reduce((a,b) => a + b, 0) / allNumbers.length
             return(
                 <tr key={brewery.id}>
-                    <td onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></td>
-                    <td>{brewery.brewery_type}</td>
-                    <td><StarRating
-                                    numberOfStars="5"
+                    <td onClick={() => this.props.breweryShow(brewery)}><Link to='/show' class='text-primary'>{brewery.name}</Link></td>
+                    <td class='text-center'>{brewery.brewery_type}</td>
+                    <td class='text-center'><StarRatingConstant
+                                    numberOfStars={rating[0].number}
                                     currentRating={rating[0].number}
                                 /></td>
-                    <td>{averageRating}</td>
-                    <td>{brewery.address}</td>
-                    <td>{brewery.city}</td>
-                    <td>{brewery.state}</td>
+                    <td class='text-center'>{averageRating}</td>
+                    <td class='text-center'>{brewery.address}</td>
+                    <td class='text-center'>{brewery.city}</td>
+                    <td class='text-center'>{brewery.state}</td>
                 </tr>
             )
         })
@@ -69,7 +69,7 @@ class Home extends Component {
         }
     }
 
-    handleName = (event) => {
+    handleName = event => {
         this.setState({
           searchName: event.target.value
         })
@@ -77,10 +77,10 @@ class Home extends Component {
 
     render() {
         return(
-            <div class='container'>
-                <div class='row' >
-                    <div class='col-sm-6' >
-                <Link to='/nearme' >
+            <Container>
+                <Row sm={2}>
+                    <Col>
+                <Link to='/' >
                     <Button variant='primary'>Breweries Near Me</Button>
                 </Link>
                     <Form inline='true'>
@@ -90,16 +90,16 @@ class Home extends Component {
                         </Form.Group>
                         <Button variant='primary' type='submit' onClick={this.handleSearch} >Search</Button>
                     </Form>
-                    </div>
-                    <div class='col-sm-6' >
+                    </Col>
+                    <Col>
                         <br></br>
                         <Form inline='true'>
                             <Form.Label>Brewery Name</Form.Label>
                             <Form.Control type='text' placeholder='Brewery Name' onChange={this.handleName} value={this.state.name}></Form.Control>
                         </Form>
-                    </div>
-                </div>
-                <Table variant='light' bordered='true' style={{width: '100%'}}>
+                    </Col>
+                </Row>
+                <Table bordered hover variant='secondary' style={{width: '100%'}}>
                     <tbody>
                         <tr>
                             <th>Name</th>
@@ -113,7 +113,7 @@ class Home extends Component {
                         {this.renderBreweries()}
                     </tbody>
                 </Table>
-            </div>
+            </Container>
         )
     }
 }

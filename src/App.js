@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Router, Route, Switch } from 'react-router-dom';
-import Login from './Login';
+import Login from './components/Login';
 import BreweriesNearMe from './components/BreweriesNearMe';
 import BrewerySearch from './components/BrewerySearch';
 import BreweryShow from './components/BreweryShow';
@@ -23,7 +23,8 @@ class App extends Component {
       rating: null, 
       notes: '', 
       number: 0,
-      edit: {} 
+      edit: {}, 
+      ratingAlert: false 
      } 
      
   }
@@ -62,18 +63,21 @@ class App extends Component {
       number: rating[0].number
     })} else {
       this.setState({
-        showBrewery: brewery
+        showBrewery: brewery, 
+        rating: null, 
+        notes: '',
+        number: 0
       })
     }
   }
 
-  loginUser = (userObj) => {
+  loginUser = userObj => {
     this.setState({
       currentUser: userObj
     })
   }
 
-  handleHomeSearch = (location) => {
+  handleHomeSearch = location => {
     this.setState({
       search: location
     })
@@ -86,7 +90,7 @@ class App extends Component {
     localStorage.clear()
   }
 
-  myRating = (brewery) => {
+  myRating = brewery => {
     const breweryRatings = this.state.ratings.filter(rating => {
         return rating.brewery_id === brewery.id})
     return breweryRatings.filter(rating =>{
@@ -94,20 +98,21 @@ class App extends Component {
     })
   }
 
-  setRating = (event) => {
+  setRating = event => {
     this.setState({
         number: event
     })
   }
 
-  noteChange = (event) => {
+  noteChange = event => {
     this.setState({
         notes: event.target.value
     })
   }
 
-  saveRating = () => {
-    if (this.state.number !== 0) {
+  saveRating = event => {
+    event.preventDefault()
+    if (this.state.number !== 0 && localStorage.token) {
       if (this.state.rating) {
         this.editRating()
       } else {
@@ -129,10 +134,12 @@ class App extends Component {
                 this.setState({
                   ratings: ratings
                 })
-                history.push('/home')
+                window.location.href = "http://localhost:3001/home"
             }) 
         }}
-        else { alert("You must rate a brewery in order to submit") }
+        else { this.setState({
+          ratingAlert: true
+        }) }
   }
 
   editRating = () => {
@@ -153,18 +160,18 @@ class App extends Component {
           this.setState({
             ratings: ratings
           })
-          history.push('/home')
+          window.location.href = "http://localhost:3001/home"
           }))
       .catch(err => console.log(err))
   }
   
-    handleEdit = (brewery) => {
+    handleEdit = brewery => {
       this.setState({
         edit: brewery
       })
     }
 
-    handleEditChange = (event) => {
+    handleEditChange = event => {
       this.setState({
         edit: {...this.state.edit,
           [event.target.name]: event.target.value
@@ -172,7 +179,7 @@ class App extends Component {
       })
     }
 
-    editSubmit = (event) => {
+    editSubmit = event => {
       event.preventDefault()
       const editBrewery = {
         method: 'PATCH',
@@ -198,13 +205,15 @@ class App extends Component {
     return (
       <Router history={history}>
         <div>
-          <BrewNavbar handleLogout={this.handleLogout}/>
+          <BrewNavbar handleLogout={this.handleLogout}
+            user={this.state.currentUser}
+            breweries={this.state.breweries}/>
           <Switch >
           <Route exact path='/search' render={routerProps => <BrewerySearch {...routerProps} 
             search={this.state.search}
             breweries={this.state.breweries}
             breweryShow={this.breweryShow}/>}/>
-          <Route exact path='/nearme' render={routerProps => <BreweriesNearMe {...routerProps} 
+          <Route exact path='/' render={routerProps => <BreweriesNearMe {...routerProps} 
             breweryShow={this.breweryShow}/>}/>
           <Route exact path='/login' render={routerProps => <Login {...routerProps}
             loginUser={this.loginUser}/>} />
@@ -219,7 +228,8 @@ class App extends Component {
             saveRating={this.saveRating}
             number={this.state.number}
             notes={this.state.notes}
-            handleEdit={this.handleEdit}/>}/>
+            handleEdit={this.handleEdit}
+            ratingAlert={this.state.ratingAlert}/>}/>
           <Route exact path='/new' render={routerProps => <NewBrewery {...routerProps}
             breweryShow={this.breweryShow}/>} />
           <Route exact path='/home' render={routerProps => <Home {...routerProps}

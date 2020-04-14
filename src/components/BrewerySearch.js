@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; 
 import BreweryCard from './BreweryCard';
 import { Link } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 class BrewerySearch extends Component {
     constructor(){
@@ -12,10 +12,11 @@ class BrewerySearch extends Component {
         }
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = event => {
         event.preventDefault()
         this.setState({
-            search: event.target.parentElement.location.value.toLowerCase()
+            search: event.target.parentElement.location.value.toLowerCase(), 
+            name: ''
         })
     }
 
@@ -46,19 +47,18 @@ class BrewerySearch extends Component {
         })
     }
 
-    handleName = (event) => {
+    handleName = event => {
         this.setState({
             name: event.target.value
         })
     }
 
     render() {
-        console.log(this.state.name)
         return (
-            <div class='container'>
+            <Container>
                 <br></br>
-                <div class='row'>
-                    <div class='col-sm-6' >
+                <Row sm={2}>
+                    <Col>
                         <Form>
                             <Form.Group>
                                 <Form.Label>Search Location</Form.Label>
@@ -66,22 +66,22 @@ class BrewerySearch extends Component {
                             </Form.Group>
                             <Button onClick={this.handleSubmit} variant='primary' type='submit' value='Search'>Search</Button> 
                         </Form>
-                    </div>
-                    {this.state.search || this.props.search ? <div class='col-sm-6'>
+                    </Col>
+                    {this.state.search || this.props.search ? <Col>
                         <Form>
                             <Form.Label>Brewery Name</Form.Label>
                             <Form.Control type='text' placeholder='Brewery Name' onChange={this.handleName} value={this.state.name}></Form.Control>
                         </Form>
-                    </div> : null}
-                </div>
+                    </Col> : null}
+                </Row>
                 <br></br>
                 <br></br>
-                <div class='row'>
+                <Row>
                     {this.state.search || this.props.search ? this.renderBreweries() : null}
-                </div>
+                </Row>
                 <br></br>
                 {this.state.search || this.props.search ? <h4><Link to='/new'>Create A New Brewery</Link></h4> : null}
-            </div>
+            </Container>
         )
     }
 }
