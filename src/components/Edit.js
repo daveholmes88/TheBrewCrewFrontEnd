@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 
-const Edit = (props) => {
+class Edit extends Component {
 
-    const { brewery } = props
+    componentDidMount() {
+        if (!localStorage.token) {
+            this.props.history.push('/login')
+        }
+    }
 
-    return(     
+    render() {
+        const { brewery } = this.props
+        return(     
         <Container>
-            <Form onChange={props.handleEditChange}>
+            <Form onChange={this.props.handleEditChange}>
                 <Form.Group>
                     <Form.Label>Name</Form.Label>
                     <Form.Control name='name' type="text" placeholder="Brewery Name" value={brewery.name} />
@@ -44,12 +50,13 @@ const Edit = (props) => {
                     <Form.Label>Phone Number</Form.Label>
                     <Form.Control name='phone' type="text" placeholder="Brewery Phone Number" value={brewery.phone}/>
                 </Form.Group>
-                <Button onClick={props.editSubmit} variant="primary" type="submit">
+                <Button onClick={this.props.editSubmit} variant="primary" type="submit">
                     Edit Brewery
                 </Button>
             </Form>
         </Container>
     )
+    }
 }
 
 export default Edit

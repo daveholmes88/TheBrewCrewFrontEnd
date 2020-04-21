@@ -9,8 +9,7 @@ class BreweryShow extends Component {
     constructor(){
         super()
         this.state = {
-            viewport: {},
-            rating: null
+            viewport: {}
         }
     }
 
@@ -20,12 +19,6 @@ class BreweryShow extends Component {
         const allNumbers = breweryRatings.map(rating => rating.number)
         const averageRating = allNumbers.reduce((a,b) => a + b, 0) / allNumbers.length
         return averageRating
-    }
-
-    handleRate = () => {
-        this.setState({
-            rate: !this.state.rate
-        })
     }
 
     componentDidMount() {
@@ -40,7 +33,7 @@ class BreweryShow extends Component {
 
 
     render(){
-        console.log(this.props.brewery)
+        console.log(this.props)
         const { brewery } = this.props
         const mapboxToken = 'pk.eyJ1IjoiZGF2ZWhvbG1lczg4IiwiYSI6ImNrOG5yYjY1MDExZnYzbHBoMHpvMGF5amkifQ.dsX_hdTiU-7GeB3vvGbS6Q'
         return(

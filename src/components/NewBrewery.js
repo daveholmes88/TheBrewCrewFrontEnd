@@ -40,6 +40,12 @@ class NewBrewery extends Component {
             })
     }
 
+    componentDidMount() {
+        if (!localStorage.token) {
+            this.props.history.push('/login')
+        }
+    }
+
     render() {
         return(
             <div class='container'>

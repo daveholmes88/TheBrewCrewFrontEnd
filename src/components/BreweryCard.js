@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Card } from 'react-bootstrap';
 
-const BreweryCard = (props) => {
+class BreweryCard extends Component {
 
-    const deleteBrewery = () => {
+    deleteBrewery = () => {
         const deleteObj = {
             method: 'DELETE', 
             headers: {
@@ -18,13 +18,14 @@ const BreweryCard = (props) => {
             .then(breweries => console.log(breweries))
     }
 
-    const { brewery } = props
+    render(){
+    const { brewery } = this.props
 
     return(
         <div class='container-fluid d-flex align-items-center col-sm-6 col-md-3 overflow-auto'>
             <Card border='warning' style={{ height: '15rem', width: '18rem' }}>
                 <Card.Body>
-                    <Card.Title class='text-center' onClick={() => props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></Card.Title>
+                    <Card.Title class='text-center' onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></Card.Title>
                     <Card.Text class='text-center'>{brewery.address} {brewery.city}, {brewery.state}, {brewery.zip}</Card.Text>
                     <a href={brewery.website} target='_blank' rel='noopener noreferrer'><Card.Text class='text-center'>Website</Card.Text></a>
                     <Card.Text class='text-center'>{brewery.phone}</Card.Text>
@@ -33,6 +34,7 @@ const BreweryCard = (props) => {
             </Card>
         </div>
     )
+    }
 }
 
 export default BreweryCard

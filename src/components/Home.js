@@ -103,12 +103,12 @@ class Home extends Component {
                     <tbody>
                         <tr>
                             <th>Name</th>
-                            <th>Type</th>
-                            <th>My Rating</th>
-                            <th>Global Rating</th>
-                            <th>Address</th>
-                            <th>City</th>
-                            <th>State</th>
+                            <th class='text-center'>Type</th>
+                            <th class='text-center'>My Rating</th>
+                            <th class='text-center'>Global Rating</th>
+                            <th class='text-center'>Address</th>
+                            <th class='text-center'>City</th>
+                            <th class='text-center'>State</th>
                         </tr>
                         {this.renderBreweries()}
                     </tbody>

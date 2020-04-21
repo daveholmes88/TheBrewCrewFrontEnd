@@ -69,7 +69,7 @@ class BrewerySearch extends Component {
                     </Col>
                     {this.state.search || this.props.search ? <Col>
                         <Form>
-                            <Form.Label>Brewery Name</Form.Label>
+                            <Form.Label>Filter Results</Form.Label>
                             <Form.Control type='text' placeholder='Brewery Name' onChange={this.handleName} value={this.state.name}></Form.Control>
                         </Form>
                     </Col> : null}

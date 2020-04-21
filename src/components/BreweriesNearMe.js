@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactMapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
 import { Link } from 'react-router-dom';
-import { Card, Form, Button, Spinner, Container, Row, Col } from 'react-bootstrap';
+import { Card, Form, Button, Spinner, Container, Row, Col, Alert } from 'react-bootstrap';
 
 class BreweriesNearMe extends Component {
   constructor() {
@@ -11,7 +11,8 @@ class BreweriesNearMe extends Component {
         searchAddress: '',
         breweries: [],
         selected: null,
-        searchName: ''
+        searchName: '',
+        alert: false
     }
   }
   
@@ -35,15 +36,22 @@ class BreweriesNearMe extends Component {
     }
     fetch('http://localhost:3000/descriptions', newLocation)
       .then(resp => resp.json())
-      .then(data => 
+      .then(data => {
+        if (data.error) {
+          this.setState({
+            alert: true
+          }) 
+        } else {
         this.setState({
           breweries: data.breweries,
           viewport: {
             latitude: data.location[0],
             longitude: data.location[1],
             zoom: 13
-          }
-        }))
+          },
+          searchName: '',
+          alert: false
+      })}})
   }
 
   componentDidMount() {
@@ -130,6 +138,7 @@ class BreweriesNearMe extends Component {
                 </Form.Group>
                 <Button onClick={this.onSubmit} variant='primary' type='submit' value='Search'>Search</Button>
               </Form>
+              {this.state.alert ? <Alert key='2' variant='warning'>Couldn't Find Location</Alert> : null}
               <ReactMapGL {...viewport}
                 mapStyle='mapbox://styles/daveholmes88/ck8yhbgr259vz1itbn285ffo0'
                 mapboxApiAccessToken={mapboxToken}
@@ -152,8 +161,8 @@ class BreweriesNearMe extends Component {
             </Col>
             <Col id='right-container'>
               <Form inline='true'>
-                <Form.Label>Brewery Name</Form.Label>
-                <Form.Control type='text' placeholder='Brewery Name' onChange={this.handleName} value={this.state.name}></Form.Control>
+                <Form.Label>Filter Results</Form.Label>
+                <Form.Control type='text' placeholder='Brewery Name' onChange={this.handleName} value={this.state.searchName}></Form.Control>
               </Form>
               <br></br>
               {this.state.breweries.length > 0 ? this.renderBreweries() : null}

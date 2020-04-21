@@ -30,37 +30,54 @@ class App extends Component {
   }
 
   componentDidMount() {
+    const token = localStorage.getItem('token')
+      if (token) { 
+        this.userFetch(token)
+      } else {
+        this.breweryFetch()
+      }
+  }
+
+  breweryFetch = () => {
     fetch('http://localhost:3000/breweries')
+        .then(resp => resp.json())
+        .then(data => {
+          this.setState({
+            breweries: data.breweries, 
+            ratings: data.ratings})
+        })
+        .catch(err => console.log(err))
+  }
+
+  userFetch = token => {
+    const reqObj = {
+      method: 'GET',
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    }
+    fetch('http://localhost:3000/users', reqObj)
       .then(resp => resp.json())
       .then(data => {
-        this.setState({breweries: data.breweries, ratings: data.ratings})
+        console.log(data)
+        this.setState({
+          currentUser: data.user,
+          breweries: data.breweries, 
+          ratings: data.ratings
+        })
       })
-      const token = localStorage.getItem('token')
-      if (token) {
-        const reqObj = {
-          method: 'GET',
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        }
-        fetch('http://localhost:3000/users', reqObj)
-          .then(resp => resp.json())
-          .then(data => {
-            this.setState({
-              currentUser: data
-            })
-          })
-      }
+      .catch(err => console.log(err))
   }
 
   breweryShow = brewery => {
     const rating = this.myRating(brewery)
     if (rating.length > 0) {
-    this.setState({
-      showBrewery: brewery,
-      rating: rating[0],
-      notes: rating[0].notes,
-      number: rating[0].number
+      debugger
+      this.setState({
+        showBrewery: brewery,
+        rating: rating[0],
+        notes: rating[0].notes,
+        number: rating[0].number
     })} else {
       this.setState({
         showBrewery: brewery, 
@@ -69,6 +86,15 @@ class App extends Component {
         number: 0
       })
     }
+    history.push('/show')
+  }
+
+  myRating = brewery => {
+    const breweryRatings = this.state.ratings.filter(rating => {
+        return rating.brewery_id === brewery.id})
+    return breweryRatings.filter(rating =>{
+        return rating.user_id === this.state.currentUser.id
+    })
   }
 
   loginUser = userObj => {
@@ -90,14 +116,6 @@ class App extends Component {
     localStorage.clear()
   }
 
-  myRating = brewery => {
-    const breweryRatings = this.state.ratings.filter(rating => {
-        return rating.brewery_id === brewery.id})
-    return breweryRatings.filter(rating =>{
-        return rating.user_id === this.state.currentUser.id
-    })
-  }
-
   setRating = event => {
     this.setState({
         number: event
@@ -116,30 +134,35 @@ class App extends Component {
       if (this.state.rating) {
         this.editRating()
       } else {
-        const createObj = {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                rating: this.state.number,
-                notes: this.state.notes,
-                brewery_id: this.state.showBrewery.id,
-                user_id: this.state.currentUser.id
-            })
-        }
-        fetch('http://localhost:3000/ratings', createObj)
-            .then(resp => resp.json())
-            .then(ratings => {
-                this.setState({
-                  ratings: ratings
-                })
-                window.location.href = "http://localhost:3001/home"
-            }) 
-        }}
-        else { this.setState({
+        this.createRating()
+      }}
+    else { this.setState({
           ratingAlert: true
-        }) }
+        }) 
+    }
+  }
+
+  createRating = () => {
+    const createObj = {
+      method: 'POST', 
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          rating: this.state.number,
+          notes: this.state.notes,
+          brewery_id: this.state.showBrewery.id,
+          user_id: this.state.currentUser.id
+      })
+  }
+  fetch('http://localhost:3000/ratings', createObj)
+      .then(resp => resp.json())
+      .then(ratings => {
+          this.setState({
+            ratings: ratings
+          })
+          history.push('/home')
+      }) 
   }
 
   editRating = () => {
@@ -160,7 +183,7 @@ class App extends Component {
           this.setState({
             ratings: ratings
           })
-          window.location.href = "http://localhost:3001/home"
+          history.push('/home')
           }))
       .catch(err => console.log(err))
   }
@@ -207,7 +230,8 @@ class App extends Component {
         <div>
           <BrewNavbar handleLogout={this.handleLogout}
             user={this.state.currentUser}
-            breweries={this.state.breweries}/>
+            breweries={this.state.breweries}
+            breweryShow={this.breweryShow}/>
           <Switch >
           <Route exact path='/search' render={routerProps => <BrewerySearch {...routerProps} 
             search={this.state.search}
