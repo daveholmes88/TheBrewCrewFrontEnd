@@ -17,12 +17,8 @@ class BrewNavbar extends React.Component {
         this.props.breweryShow(brewery[0])
     }
 
-    filterBreweries = () => {
-        if (this.props.breweries) {
-        const names = this.props.breweries.map(brewery => brewery.name)
-        return names.filter(brewery => {
-            return brewery.includes(this.state.brewerySearch)
-        })}
+    searchBreweries = () => {
+        return  this.props.breweries.map(brewery => brewery.name)
     }
 
     render() {
@@ -47,7 +43,7 @@ class BrewNavbar extends React.Component {
                             ref="type"
                             minLength={3}
                             onChange={this.handleSubmit}
-                            options={this.filterBreweries()}
+                            options={this.searchBreweries()}
                             placeholder="Search Brewery Name"
                         />
                     </Nav>
