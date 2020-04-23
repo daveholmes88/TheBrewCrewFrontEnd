@@ -13,13 +13,9 @@ Hops Along has three main features, the ability to search breweries in any given
 Along with that, every user has the ability to create a new brewery and edit existing breweries. 
 
 Frontend Prerequisites:
-
 React
-
 React Router
-
 React Bootstrap
-
 Custom JWT authentication system integrates with JWT auth on the Rails API side.
 
 Frontend Installation Overview:
