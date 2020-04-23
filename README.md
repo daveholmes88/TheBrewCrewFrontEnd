@@ -1,68 +1,30 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Note: This repo houses the frontend code for Hops Along. Please refer here for the project's backend code and installation instructions. https://github.com/daveholmes88/HopsAlongBackend
 
-## Available Scripts
 
-In the project directory, you can run:
+Hops Along
+An application to find breweries in any location in the United States while rating, adding personal notes, and finding a global rating. 
 
-### `yarn start`
+Demo
+A video demo of Hops Along is available here https://www.youtube.com/watch?v=zJWot-iI_XQ&t=
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Usage and Features
+Hops Along has three main features, the ability to search breweries in any given city or state, the ability to find breweries near you, and the ability to view, rate any brewery, and edit any rating.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Along with that, every user has the ability to create a new brewery and edit existing breweries. 
 
-### `yarn test`
+Frontend Prerequisites
+React
+React Router
+React Bootstrap
+Custom JWT authentication system integrates with JWT auth on the Rails API side.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Frontend Installation Overview
+Once the Rails server is running, launch the frontend components on http://localhost:3001:
 
-### `yarn build`
+cd ..
+cd HopsAlongFrotend
+npm install && npm start
+Note: when prompted, reply y when asked: ?
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Would you like to run the app on another port instead? (Y/n)  
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
