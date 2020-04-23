@@ -19,6 +19,7 @@ React Bootstrap
 Custom JWT authentication system integrates with JWT auth on the Rails API side.
 
 Frontend Installation Overview:
+
 Once the Rails server is running, launch the frontend components on http://localhost:3001:
 
 cd ..
