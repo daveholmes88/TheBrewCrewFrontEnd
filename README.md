@@ -40,5 +40,5 @@ cd HopsAlongFrotend
 
 npm install && npm start
 
-Note: when prompted, reply y when asked: ? Would you like to run the app on another port instead? (Y/n)  
+Note: when prompted, reply y when asked: Would you like to run the app on another port instead? (Y/n)  
 
