@@ -3,6 +3,8 @@ import ReactMapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
 import { Link } from 'react-router-dom';
 import { Card, Form, Button, Spinner, Container, Row, Col, Alert } from 'react-bootstrap';
 
+import BreweryCard from './BreweryCard'
+
 class BreweriesNearMe extends Component {
   constructor() {
     super()
@@ -85,18 +87,21 @@ class BreweriesNearMe extends Component {
       })
     }
     return breweries.map(brewery => {
-      return (
-        <Card border='warning' >
-          <Card.Body>
-            <Card.Title onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></Card.Title>
-            <p>{brewery.brewery_type}</p>
-            <Card.Text>{brewery.address} {brewery.city}, {brewery.state}, {brewery.zip}</Card.Text>
-            <a href={brewery.website} target='_blank' rel='noopener noreferrer'>{brewery.name}'s Website</a>
-            <p>{brewery.phone}</p>
-          </Card.Body>
-        </Card>
-      )
+      return <BreweryCard brewery={brewery}
+        key={brewery.id}
+        breweryShow={this.props.breweryShow} />
     })
+    // <Card border='warning' >
+    //   <Card.Body>
+    //     <Card.Title onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></Card.Title>
+    //     <p>{brewery.brewery_type}</p>
+    //     <Card.Text>{brewery.address} {brewery.city}, {brewery.state}, {brewery.zip}</Card.Text>
+    //     <a href={brewery.website} target='_blank' rel='noopener noreferrer'>{brewery.name}'s Website</a>
+    //     <p>{brewery.phone}</p>
+    //   </Card.Body>
+    // </Card>
+    //     )
+    //   })
   }
 
   renderMarkers = () => {
