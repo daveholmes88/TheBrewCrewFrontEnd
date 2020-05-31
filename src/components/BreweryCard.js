@@ -29,7 +29,7 @@ class BreweryCard extends Component {
                     <Card.Text class='text-center'>{brewery.address} {brewery.city}, {brewery.state}, {brewery.zip}</Card.Text>
                     <a href={brewery.website} target='_blank' rel='noopener noreferrer'><Card.Text class='text-center'>Website</Card.Text></a>
                     <Card.Text class='text-center'>{brewery.phone}</Card.Text>
-                    {/* <button onClick={this.deleteBrewery}>Delete Brewery</button> */}
+                    <button onClick={this.deleteBrewery}>Delete Brewery</button>
                 </Card.Body>
             </Card>
         </div>
