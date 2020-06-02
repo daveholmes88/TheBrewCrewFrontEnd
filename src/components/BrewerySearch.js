@@ -1,10 +1,10 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import BreweryCard from './BreweryCard';
 import { Link } from 'react-router-dom';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 class BrewerySearch extends Component {
-    constructor(){
+    constructor() {
         super()
         this.state = {
             search: null,
@@ -15,7 +15,7 @@ class BrewerySearch extends Component {
     handleSubmit = event => {
         event.preventDefault()
         this.setState({
-            search: event.target.parentElement.location.value.toLowerCase(), 
+            search: event.target.parentElement.location.value.toLowerCase(),
             name: ''
         })
     }
@@ -24,20 +24,22 @@ class BrewerySearch extends Component {
         let searchedBreweries
         if (this.state.search) {
             searchedBreweries = this.props.breweries.filter(brewery => {
-                return brewery.city.toLowerCase() === this.state.search || brewery.state.toLowerCase() ===this.state.search
-        })} else {
+                return brewery.city.toLowerCase() === this.state.search || brewery.state.toLowerCase() === this.state.search
+            })
+        } else {
             searchedBreweries = this.props.breweries.filter(brewery => {
-                return brewery.city.toLowerCase() === this.props.search.toLowerCase() || brewery.state.toLowerCase() ===this.props.search.toLowerCase()
-        })}
+                return brewery.city.toLowerCase() === this.props.search.toLowerCase() || brewery.state.toLowerCase() === this.props.search.toLowerCase()
+            })
+        }
         if (this.state.name) {
             searchedBreweries = searchedBreweries.filter(brewery => {
                 return brewery.name.toLowerCase().includes(this.state.name.toLowerCase())
             })
         }
         return searchedBreweries.map(brewery => {
-            return <BreweryCard brewery={brewery} 
+            return <BreweryCard brewery={brewery}
                 key={brewery.id}
-                breweryShow={this.props.breweryShow}/>
+                breweryShow={this.props.breweryShow} />
         })
     }
 
@@ -64,7 +66,7 @@ class BrewerySearch extends Component {
                                 <Form.Label>Search Location</Form.Label>
                                 <Form.Control type='text' placeholder='Enter City OR State' name='location'></Form.Control>
                             </Form.Group>
-                            <Button onClick={this.handleSubmit} variant='primary' type='submit' value='Search'>Search</Button> 
+                            <Button onClick={this.handleSubmit} variant='primary' type='submit' value='Search'>Search</Button>
                         </Form>
                     </Col>
                     {this.state.search || this.props.search ? <Col>

@@ -87,10 +87,6 @@ class BreweriesNearMe extends Component {
       })
     }
     return breweries.map(brewery => {
-      //   return <BreweryCard brewery={brewery}
-      //     key={brewery.id}
-      //     breweryShow={this.props.breweryShow} />
-      // })
       return (<Card border='warning' >
         <Card.Body>
           <Card.Title onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></Card.Title>
