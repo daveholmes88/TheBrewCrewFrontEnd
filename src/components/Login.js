@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 import { Form, Button, Alert, Container, Row, Col, } from 'react-bootstrap'
 
 class Login extends Component {
-    constructor(){
+    constructor() {
         super()
         this.state = {
             username: '',
             password: '',
-            alert: false
+            email: '',
+            alert: false,
+            signup: false
         }
     }
 
@@ -23,19 +25,19 @@ class Login extends Component {
         })
     }
 
-    onSubmit = event => {
+    onSubmitLogin = event => {
         event.preventDefault()
         const reqUser = {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username: this.state.username, 
+                username: this.state.username,
                 password: this.state.password
             })
         }
-        fetch('http://localhost:3000/users', reqUser)
+        fetch('http://localhost:3000/users/1', reqUser)
             .then(resp => resp.json())
             .then(data => {
                 if (data.error) {
@@ -43,9 +45,50 @@ class Login extends Component {
                         alert: true
                     })
                 } else {
-                this.props.loginUser({id: data.id, username: data.username})
-                localStorage.setItem('token', data.token)
-                this.props.history.push('/')
+                    this.props.loginUser({ id: data.id, username: data.username })
+                    localStorage.setItem('token', data.token)
+                    this.props.history.push('/')
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
+    signUpState = () => {
+        this.setState({
+            signup: !this.state.signup
+        })
+    }
+
+    changeEmail = event => {
+        this.setState({
+            email: event.target.value
+        })
+    }
+
+    onSubmitSignup = event => {
+        event.preventDefault()
+        const reqUser = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: this.state.username,
+                password: this.state.password,
+                email: this.state.email
+            })
+        }
+        fetch('http://localhost:3000/users/', reqUser)
+            .then(resp => resp.json())
+            .then(data => {
+                if (data.error) {
+                    this.setState({
+                        alert: true
+                    })
+                } else {
+                    this.props.loginUser({ id: data.id, username: data.username })
+                    localStorage.setItem('token', data.token)
+                    this.props.history.push('/')
                 }
             })
             .catch(err => console.log(err))
@@ -55,10 +98,11 @@ class Login extends Component {
         return (
             <Container>
                 <Row md={2}>
-                    <Col>
+                    {!this.state.signup ? <Col>
                         <br></br>
-                        <h2 class='text-primary'>LOGIN/SIGN UP</h2>
-                        <Form onSubmit={this.onSubmit}>
+                        <h2 class='text-primary'>LOGIN</h2>
+                        <h5>Not a user? <Button onClick={this.signUpState}>Sign Up</Button></h5>
+                        <Form onSubmit={this.onSubmitLogin}>
                             <Form.Group controlId="formBasicEmail">
                                 <Form.Label class='text-primary'>Username:</Form.Label>
                                 <Form.Control type="text" placeholder="Enter Username" onChange={this.changeUsername} value={this.state.username} />
@@ -66,12 +110,34 @@ class Login extends Component {
                             </Form.Group>
                             <Form.Group controlId="formBasicPassword">
                                 <Form.Label class='text-primary'>Password:</Form.Label>
-                                <Form.Control type="password" placeholder="Enter Password" onChange={this.changePassword} value={this.state.password}/>
+                                <Form.Control type="password" placeholder="Enter Password" onChange={this.changePassword} value={this.state.password} />
                             </Form.Group>
                             <Button variant="primary" type="submit">Login</Button>
                         </Form>
                         {this.state.alert ? <Alert key='1' variant='warning'>Invalid Sign-in Credentials</Alert> : null}
-                    </Col>
+                    </Col> : <Col>
+                            <br></br>
+                            <h2 class='text-primary'>SIGN UP</h2>
+                            <h5>Already a user? <Button onClick={this.signUpState}>Login</Button></h5>
+                            <Form onSubmit={this.onSubmitSignup}>
+                                <Form.Group controlId="formBasicEmail">
+                                    <Form.Label class='text-primary'>Email:</Form.Label>
+                                    <Form.Control type="text" placeholder="Enter Email" onChange={this.changeEmail} value={this.state.email} />
+                                    <Form.Text className="text-muted"></Form.Text>
+                                </Form.Group>
+                                <Form.Group controlId="formBasicEmail">
+                                    <Form.Label class='text-primary'>Username:</Form.Label>
+                                    <Form.Control type="text" placeholder="Enter Username" onChange={this.changeUsername} value={this.state.username} />
+                                    <Form.Text className="text-muted"></Form.Text>
+                                </Form.Group>
+                                <Form.Group controlId="formBasicPassword">
+                                    <Form.Label class='text-primary'>Password:</Form.Label>
+                                    <Form.Control type="password" placeholder="Enter Password" onChange={this.changePassword} value={this.state.password} />
+                                </Form.Group>
+                                <Button variant="primary" type="submit">Sign Up</Button>
+                            </Form>
+                            {this.state.alert ? <Alert key='1' variant='warning'>Invalid Sign-up Credentials</Alert> : null}
+                        </Col>}
                 </Row>
             </Container>
         )
