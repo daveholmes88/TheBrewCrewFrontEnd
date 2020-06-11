@@ -5,8 +5,8 @@ import { Card, Button, Alert, Container, Row, Col, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 
 class BreweryShow extends Component {
-    
-    constructor(){
+
+    constructor() {
         super()
         this.state = {
             viewport: {}
@@ -15,15 +15,16 @@ class BreweryShow extends Component {
 
     breweryRating = () => {
         const breweryRatings = this.props.ratings.filter(rating => {
-            return rating.brewery_id === this.props.brewery.id})
+            return rating.brewery_id === this.props.brewery.id
+        })
         const allNumbers = breweryRatings.map(rating => rating.number)
-        const averageRating = allNumbers.reduce((a,b) => a + b, 0) / allNumbers.length
+        const averageRating = allNumbers.reduce((a, b) => a + b, 0) / allNumbers.length
         return averageRating
     }
 
     componentDidMount() {
         this.setState({
-            viewport: {longitude: this.props.brewery.longitude, latitude: this.props.brewery.latitude, zoom: 13},
+            viewport: { longitude: this.props.brewery.longitude, latitude: this.props.brewery.latitude, zoom: 13 },
         })
     }
 
@@ -32,11 +33,11 @@ class BreweryShow extends Component {
     }
 
 
-    render(){
-        console.log(this.props)
+    render() {
+        console.log(this.props.user)
         const { brewery } = this.props
         const mapboxToken = 'pk.eyJ1IjoiZGF2ZWhvbG1lczg4IiwiYSI6ImNrOG5yYjY1MDExZnYzbHBoMHpvMGF5amkifQ.dsX_hdTiU-7GeB3vvGbS6Q'
-        return(
+        return (
             <Container>
                 <Row sm={2}>
                     <Col>
@@ -45,10 +46,10 @@ class BreweryShow extends Component {
                             mapStyle='mapbox://styles/daveholmes88/ck8yhbgr259vz1itbn285ffo0'
                             width="38vw"
                             height="90vh"
-                            onViewportChange={viewport => this.setState({viewport})}>
+                            onViewportChange={viewport => this.setState({ viewport })}>
                             <Marker key={brewery.id} longitude={parseFloat(brewery.longitude)} latitude={parseFloat(brewery.latitude)} >
                                 <button class='marker-btn'>
-                                    <img src='../../beer-mug.png' alt='brewery icon'/>
+                                    <img src='../../beer-mug.png' alt='brewery icon' />
                                 </button>
                             </Marker>
                         </ReactMapGL>
@@ -85,16 +86,16 @@ class BreweryShow extends Component {
                                         </Button>
                                     </Form.Group>
                                 </Form>
-                                {this.props.ratingAlert ? <Alert variant='warning'>You must be logged in and rate a brewery to save.</Alert> : null} 
+                                {this.props.ratingAlert ? <Alert variant='warning'>You must be logged in and rate a brewery to save.</Alert> : null}
                                 <br></br>
-                                <Link to='/edit'>
+                                {this.props.user.admin ? <Link to='/edit'>
                                     <Button onClick={this.handleEdit}>Edit Brewery</Button>
-                                </Link> 
+                                </Link> : null}
                             </Card.Body>
-                    </Card>
+                        </Card>
                     </Col>
                 </Row>
-            </Container>         
+            </Container>
         )
     }
 }

@@ -20,33 +20,34 @@ class App extends Component {
       breweries: [],
       showBrewery: {},
       search: null,
-      rating: null, 
-      notes: '', 
+      rating: null,
+      notes: '',
       number: 0,
-      edit: {}, 
-      ratingAlert: false 
-     } 
-     
+      edit: {},
+      ratingAlert: false,
+    }
+
   }
 
   componentDidMount() {
     const token = localStorage.getItem('token')
-      if (token) { 
-        this.userFetch(token)
-      } else {
-        this.breweryFetch()
-      }
+    if (token) {
+      this.userFetch(token)
+    } else {
+      this.breweryFetch()
+    }
   }
 
   breweryFetch = () => {
     fetch('http://localhost:3000/breweries')
-        .then(resp => resp.json())
-        .then(data => {
-          this.setState({
-            breweries: data.breweries, 
-            ratings: data.ratings})
+      .then(resp => resp.json())
+      .then(data => {
+        this.setState({
+          breweries: data.breweries,
+          ratings: data.ratings
         })
-        .catch(err => console.log(err))
+      })
+      .catch(err => console.log(err))
   }
 
   userFetch = token => {
@@ -59,10 +60,9 @@ class App extends Component {
     fetch('http://localhost:3000/users', reqObj)
       .then(resp => resp.json())
       .then(data => {
-        console.log(data)
         this.setState({
           currentUser: data.user,
-          breweries: data.breweries, 
+          breweries: data.breweries,
           ratings: data.ratings
         })
       })
@@ -72,16 +72,16 @@ class App extends Component {
   breweryShow = brewery => {
     const rating = this.myRating(brewery)
     if (rating.length > 0) {
-      debugger
       this.setState({
         showBrewery: brewery,
         rating: rating[0],
         notes: rating[0].notes,
         number: rating[0].number
-    })} else {
+      })
+    } else {
       this.setState({
-        showBrewery: brewery, 
-        rating: null, 
+        showBrewery: brewery,
+        rating: null,
         notes: '',
         number: 0
       })
@@ -91,9 +91,10 @@ class App extends Component {
 
   myRating = brewery => {
     const breweryRatings = this.state.ratings.filter(rating => {
-        return rating.brewery_id === brewery.id})
-    return breweryRatings.filter(rating =>{
-        return rating.user_id === this.state.currentUser.id
+      return rating.brewery_id === brewery.id
+    })
+    return breweryRatings.filter(rating => {
+      return rating.user_id === this.state.currentUser.id
     })
   }
 
@@ -118,13 +119,13 @@ class App extends Component {
 
   setRating = event => {
     this.setState({
-        number: event
+      number: event
     })
   }
 
   noteChange = event => {
     this.setState({
-        notes: event.target.value
+      notes: event.target.value
     })
   }
 
@@ -135,95 +136,98 @@ class App extends Component {
         this.editRating()
       } else {
         this.createRating()
-      }}
-    else { this.setState({
-          ratingAlert: true
-        }) 
+      }
+    }
+    else {
+      this.setState({
+        ratingAlert: true
+      })
     }
   }
 
   createRating = () => {
     const createObj = {
-      method: 'POST', 
+      method: 'POST',
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-          rating: this.state.number,
-          notes: this.state.notes,
-          brewery_id: this.state.showBrewery.id,
-          user_id: this.state.currentUser.id
+        rating: this.state.number,
+        notes: this.state.notes,
+        brewery_id: this.state.showBrewery.id,
+        user_id: this.state.currentUser.id
       })
-  }
-  fetch('http://localhost:3000/ratings', createObj)
+    }
+    fetch('http://localhost:3000/ratings', createObj)
       .then(resp => resp.json())
       .then(ratings => {
-          this.setState({
-            ratings: ratings
-          })
-          history.push('/home')
-      }) 
+        this.setState({
+          ratings: ratings
+        })
+        history.push('/home')
+      })
   }
 
   editRating = () => {
     const updateObj = {
-      method: 'PATCH', 
+      method: 'PATCH',
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-          rating: this.state.rating.id,
-          number: this.state.number,
-          notes: this.state.notes
+        rating: this.state.rating.id,
+        number: this.state.number,
+        notes: this.state.notes
       })
     }
     fetch(`http://localhost:3000/ratings/${this.state.rating.id}`, updateObj)
       .then(resp => resp.json())
       .then((ratings => {
-          this.setState({
-            ratings: ratings
-          })
-          history.push('/home')
-          }))
+        this.setState({
+          ratings: ratings
+        })
+        history.push('/home')
+      }))
       .catch(err => console.log(err))
   }
-  
-    handleEdit = brewery => {
-      this.setState({
-        edit: brewery
-      })
-    }
 
-    handleEditChange = event => {
-      this.setState({
-        edit: {...this.state.edit,
-          [event.target.name]: event.target.value
-        }
-      })
-    }
+  handleEdit = brewery => {
+    this.setState({
+      edit: brewery
+    })
+  }
 
-    editSubmit = event => {
-      event.preventDefault()
-      const editBrewery = {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          brewery: this.state.edit
-        })
+  handleEditChange = event => {
+    this.setState({
+      edit: {
+        ...this.state.edit,
+        [event.target.name]: event.target.value
       }
-      fetch(`http://localhost:3000/breweries/${this.state.edit.id}`, editBrewery)
-        .then(resp => resp.json())
-        .then(data => {
-          this.setState({
-            showBrewery: data,
-            edit: {}
-          })
-          history.push('/show')
-        })
+    })
+  }
+
+  editSubmit = event => {
+    event.preventDefault()
+    const editBrewery = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        brewery: this.state.edit
+      })
     }
-  
+    fetch(`http://localhost:3000/breweries/${this.state.edit.id}`, editBrewery)
+      .then(resp => resp.json())
+      .then(data => {
+        this.setState({
+          showBrewery: data,
+          edit: {}
+        })
+        history.push('/show')
+      })
+  }
+
   render() {
     return (
       <Router history={history}>
@@ -231,41 +235,44 @@ class App extends Component {
           <BrewNavbar handleLogout={this.handleLogout}
             user={this.state.currentUser}
             breweries={this.state.breweries}
-            breweryShow={this.breweryShow}/>
+            breweryShow={this.breweryShow} />
           <Switch >
-          <Route exact path='/search' render={routerProps => <BrewerySearch {...routerProps} 
-            search={this.state.search}
-            breweries={this.state.breweries}
-            breweryShow={this.breweryShow}/>}/>
-          <Route exact path='/' render={routerProps => <BreweriesNearMe {...routerProps} 
-            breweryShow={this.breweryShow}/>}/>
-          <Route exact path='/login' render={routerProps => <Login {...routerProps}
-            loginUser={this.loginUser}/>} />
-          <Route exact path='/show' render={routerProps => <BreweryShow {...routerProps}
-            user={this.state.currentUser}
-            ratings={this.state.ratings}
-            brewery={this.state.showBrewery}
-            refreshBrewery={this.refreshBrewery}
-            rating={this.state.rating}
-            setRating={this.setRating}
-            noteChange={this.noteChange}
-            saveRating={this.saveRating}
-            number={this.state.number}
-            notes={this.state.notes}
-            handleEdit={this.handleEdit}
-            ratingAlert={this.state.ratingAlert}/>}/>
-          <Route exact path='/new' render={routerProps => <NewBrewery {...routerProps}
-            breweryShow={this.breweryShow}/>} />
-          <Route exact path='/home' render={routerProps => <Home {...routerProps}
-            user={this.state.currentUser}
-            ratings={this.state.ratings}
-            breweries={this.state.breweries}
-            handleHomeSearch={this.handleHomeSearch}
-            breweryShow={this.breweryShow}/>} />
-          <Route exact path='/edit' render={routerProps => <Edit {...routerProps}
-            brewery={this.state.edit}
-            handleEditChange={this.handleEditChange}
-            editSubmit={this.editSubmit}/>}/>
+            <Route exact path='/search' render={routerProps => <BrewerySearch {...routerProps}
+              search={this.state.search}
+              breweries={this.state.breweries}
+              breweryShow={this.breweryShow}
+              user={this.state.currentUser} />} />
+            <Route exact path='/' render={routerProps => <BreweriesNearMe {...routerProps}
+              breweryShow={this.breweryShow} />} />
+            <Route exact path='/login' render={routerProps => <Login {...routerProps}
+              loginUser={this.loginUser} />} />
+            <Route exact path='/show' render={routerProps => <BreweryShow {...routerProps}
+              user={this.state.currentUser}
+              ratings={this.state.ratings}
+              brewery={this.state.showBrewery}
+              refreshBrewery={this.refreshBrewery}
+              rating={this.state.rating}
+              setRating={this.setRating}
+              noteChange={this.noteChange}
+              saveRating={this.saveRating}
+              number={this.state.number}
+              notes={this.state.notes}
+              handleEdit={this.handleEdit}
+              ratingAlert={this.state.ratingAlert} />} />
+            <Route exact path='/new' render={routerProps => <NewBrewery {...routerProps}
+              breweryShow={this.breweryShow}
+              user={this.state.currentUser} />} />
+            <Route exact path='/home' render={routerProps => <Home {...routerProps}
+              user={this.state.currentUser}
+              ratings={this.state.ratings}
+              breweries={this.state.breweries}
+              handleHomeSearch={this.handleHomeSearch}
+              breweryShow={this.breweryShow} />} />
+            <Route exact path='/edit' render={routerProps => <Edit {...routerProps}
+              brewery={this.state.edit}
+              handleEditChange={this.handleEditChange}
+              editSubmit={this.editSubmit}
+              user={this.state.currentUser} />} />
           </Switch>
         </div>
       </Router>

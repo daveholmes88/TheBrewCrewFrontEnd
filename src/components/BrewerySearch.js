@@ -39,7 +39,8 @@ class BrewerySearch extends Component {
         return searchedBreweries.map(brewery => {
             return <BreweryCard brewery={brewery}
                 key={brewery.id}
-                breweryShow={this.props.breweryShow} />
+                breweryShow={this.props.breweryShow}
+                user={this.props.user} />
         })
     }
 
@@ -82,7 +83,7 @@ class BrewerySearch extends Component {
                     {this.state.search || this.props.search ? this.renderBreweries() : null}
                 </Row>
                 <br></br>
-                {this.state.search || this.props.search ? <h4><Link to='/new'>Create A New Brewery</Link></h4> : null}
+                {this.props.user.admin && (this.state.search || this.props.search) ? <h4><Link to='/new'>Create A New Brewery</Link></h4> : null}
             </Container>
         )
     }

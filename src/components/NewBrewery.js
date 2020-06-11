@@ -1,19 +1,19 @@
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
 class NewBrewery extends Component {
     constructor() {
         super()
         this.state = {
-            name: 'Bobbing Bobber Brewing Company',
-            kind: 'micro', 
-            address: '900 MN-15', 
-            city: 'Hutchinson', 
-            state: 'Minnesota',
-            zip_code: '55350', 
-            country: 'United States', 
-            website: 'https://www.bobbingbobber.com/', 
-            phone_number: '3204554999' 
+            name: '',
+            kind: '',
+            address: '',
+            city: '',
+            state: '',
+            zip_code: '',
+            country: '',
+            website: '',
+            phone_number: ''
         }
     }
 
@@ -26,10 +26,10 @@ class NewBrewery extends Component {
     onSubmit = event => {
         event.preventDefault()
         const newBrewery = {
-            method: 'POST', 
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }, 
+            },
             body: JSON.stringify(this.state)
         }
         fetch('http://localhost:3000/breweries', newBrewery)
@@ -41,13 +41,14 @@ class NewBrewery extends Component {
     }
 
     componentDidMount() {
-        if (!localStorage.token) {
-            this.props.history.push('/login')
+        if (!this.props.user.admin) {
+            this.props.history.push('/')
         }
     }
 
     render() {
-        return(
+        console.log(this.props.user)
+        return (
             <div class='container'>
                 <Form onChange={this.onChange}>
                     <Form.Group>
@@ -72,7 +73,7 @@ class NewBrewery extends Component {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Zip Code</Form.Label>
-                        <Form.Control name='zip_code' type="text" placeholder="Brewery Zip" value={this.state.zip_code}/>
+                        <Form.Control name='zip_code' type="text" placeholder="Brewery Zip" value={this.state.zip_code} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Country</Form.Label>
@@ -80,7 +81,7 @@ class NewBrewery extends Component {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Website</Form.Label>
-                        <Form.Control name='website'type="text" placeholder="Brewery Website" value={this.state.website}/>
+                        <Form.Control name='website' type="text" placeholder="Brewery Website" value={this.state.website} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Phone Number</Form.Label>
