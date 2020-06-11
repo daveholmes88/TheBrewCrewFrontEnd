@@ -39,11 +39,7 @@ class App extends Component {
   }
 
   breweryFetch = () => {
-<<<<<<< HEAD
     fetch('https://tranquil-earth-85240.herokuapp.com/breweries')
-=======
-    fetch('http://localhost:3000/breweries')
->>>>>>> 5a37cd7a215e471bfe503be3418dcafd1806ca35
       .then(resp => resp.json())
       .then(data => {
         this.setState({

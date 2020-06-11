@@ -78,15 +78,16 @@ class Login extends Component {
                 email: this.state.email
             })
         }
-        fetch('https://tranquil-earth-85240.herokuapp.com/users/', reqUser)
+        fetch('https://tranquil-earth-85240.herokuapp.com/users', reqUser)
             .then(resp => resp.json())
             .then(data => {
+                console.log(data)
                 if (data.error) {
                     this.setState({
                         alert: true
                     })
                 } else {
-                    this.props.loginUser({ id: data.id, username: data.username })
+                    this.props.loginUser({ id: data.id, username: data.username, admin: data.admin })
                     localStorage.setItem('token', data.token)
                     this.props.history.push('/')
                 }

@@ -164,7 +164,6 @@ class BreweriesNearMe extends Component {
             </Form>
             <br></br>
             {this.state.breweries.length > 0 ? this.renderBreweries() : null}
-            {this.state.breweries.length > 0 ? <h3><Link to='/new'>Create A New Brewery</Link></h3> : null}
           </Col>
         </Row >
       </Container >
