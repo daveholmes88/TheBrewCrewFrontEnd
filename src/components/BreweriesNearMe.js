@@ -87,21 +87,16 @@ class BreweriesNearMe extends Component {
       })
     }
     return breweries.map(brewery => {
-      return <BreweryCard brewery={brewery}
-        key={brewery.id}
-        breweryShow={this.props.breweryShow} />
+      return <Card border='warning' >
+        <Card.Body>
+          <Card.Title onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></Card.Title>
+          <p>{brewery.brewery_type}</p>
+          <Card.Text>{brewery.address} {brewery.city}, {brewery.state}, {brewery.zip}</Card.Text>
+          <a href={brewery.website} target='_blank' rel='noopener noreferrer'>{brewery.name}'s Website</a>
+          <p>{brewery.phone}</p>
+        </Card.Body>
+      </Card>
     })
-    // <Card border='warning' >
-    //   <Card.Body>
-    //     <Card.Title onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></Card.Title>
-    //     <p>{brewery.brewery_type}</p>
-    //     <Card.Text>{brewery.address} {brewery.city}, {brewery.state}, {brewery.zip}</Card.Text>
-    //     <a href={brewery.website} target='_blank' rel='noopener noreferrer'>{brewery.name}'s Website</a>
-    //     <p>{brewery.phone}</p>
-    //   </Card.Body>
-    // </Card>
-    //     )
-    //   })
   }
 
   renderMarkers = () => {
