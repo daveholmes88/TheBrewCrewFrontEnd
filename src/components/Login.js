@@ -45,7 +45,7 @@ class Login extends Component {
                         alert: true
                     })
                 } else {
-                    this.props.loginUser({ id: data.id, username: data.username })
+                    this.props.loginUser({ id: data.id, username: data.username, admin: data.admin })
                     localStorage.setItem('token', data.token)
                     this.props.history.push('/')
                 }
