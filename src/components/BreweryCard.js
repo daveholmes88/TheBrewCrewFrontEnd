@@ -13,7 +13,7 @@ class BreweryCard extends Component {
             },
             body: JSON.stringify({ id: this.props.brewery.id })
         }
-        fetch(`http://localhost:3000/breweries/${this.props.brewery.id}`, deleteObj)
+        fetch(`https://tranquil-earth-85240.herokuapp.com/breweries/${this.props.brewery.id}`, deleteObj)
             .then(resp => resp.json())
             .then(breweries => console.log(breweries))
     }
