@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { Card, Container } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 
 class BreweryCard extends Component {
 
@@ -19,7 +19,7 @@ class BreweryCard extends Component {
     }
 
     render() {
-        const { brewery } = this.props
+        const { brewery, user } = this.props
 
         return (
             <div class='container-fluid d-flex align-items-center col-sm-6 col-md-3 overflow-auto'>
@@ -29,7 +29,7 @@ class BreweryCard extends Component {
                         <Card.Text class='text-center'>{brewery.address} {brewery.city}, {brewery.state}, {brewery.zip}</Card.Text>
                         <a href={brewery.website} target='_blank' rel='noopener noreferrer'><Card.Text class='text-center'>Website</Card.Text></a>
                         <Card.Text class='text-center'>{brewery.phone}</Card.Text>
-                        {/* <button onClick={this.deleteBrewery}>Delete Brewery</button> */}
+                        {user.admin ? <Button variant='primary' onClick={this.deleteBrewery}>Delete Brewery</Button> : null}
                     </Card.Body>
                 </Card>
             </div>

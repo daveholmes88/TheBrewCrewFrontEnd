@@ -39,7 +39,11 @@ class App extends Component {
   }
 
   breweryFetch = () => {
+<<<<<<< HEAD
     fetch('https://tranquil-earth-85240.herokuapp.com/breweries')
+=======
+    fetch('http://localhost:3000/breweries')
+>>>>>>> 5a37cd7a215e471bfe503be3418dcafd1806ca35
       .then(resp => resp.json())
       .then(data => {
         this.setState({
@@ -60,7 +64,6 @@ class App extends Component {
     fetch('https://tranquil-earth-85240.herokuapp.com/users', reqObj)
       .then(resp => resp.json())
       .then(data => {
-        console.log(data)
         this.setState({
           currentUser: data.user,
           breweries: data.breweries,
@@ -73,7 +76,6 @@ class App extends Component {
   breweryShow = brewery => {
     const rating = this.myRating(brewery)
     if (rating.length > 0) {
-      debugger
       this.setState({
         showBrewery: brewery,
         rating: rating[0],
@@ -242,7 +244,8 @@ class App extends Component {
             <Route exact path='/search' render={routerProps => <BrewerySearch {...routerProps}
               search={this.state.search}
               breweries={this.state.breweries}
-              breweryShow={this.breweryShow} />} />
+              breweryShow={this.breweryShow}
+              user={this.state.currentUser} />} />
             <Route exact path='/' render={routerProps => <BreweriesNearMe {...routerProps}
               breweryShow={this.breweryShow} />} />
             <Route exact path='/login' render={routerProps => <Login {...routerProps}
@@ -261,7 +264,8 @@ class App extends Component {
               handleEdit={this.handleEdit}
               ratingAlert={this.state.ratingAlert} />} />
             <Route exact path='/new' render={routerProps => <NewBrewery {...routerProps}
-              breweryShow={this.breweryShow} />} />
+              breweryShow={this.breweryShow}
+              user={this.state.currentUser} />} />
             <Route exact path='/home' render={routerProps => <Home {...routerProps}
               user={this.state.currentUser}
               ratings={this.state.ratings}
@@ -271,7 +275,8 @@ class App extends Component {
             <Route exact path='/edit' render={routerProps => <Edit {...routerProps}
               brewery={this.state.edit}
               handleEditChange={this.handleEditChange}
-              editSubmit={this.editSubmit} />} />
+              editSubmit={this.editSubmit}
+              user={this.state.currentUser} />} />
           </Switch>
         </div>
       </Router>

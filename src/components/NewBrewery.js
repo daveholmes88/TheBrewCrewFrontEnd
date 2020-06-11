@@ -5,15 +5,15 @@ class NewBrewery extends Component {
     constructor() {
         super()
         this.state = {
-            name: 'Bobbing Bobber Brewing Company',
-            kind: 'micro',
-            address: '900 MN-15',
-            city: 'Hutchinson',
-            state: 'Minnesota',
-            zip_code: '55350',
-            country: 'United States',
-            website: 'https://www.bobbingbobber.com/',
-            phone_number: '3204554999'
+            name: '',
+            kind: '',
+            address: '',
+            city: '',
+            state: '',
+            zip_code: '',
+            country: '',
+            website: '',
+            phone_number: ''
         }
     }
 
@@ -41,12 +41,13 @@ class NewBrewery extends Component {
     }
 
     componentDidMount() {
-        if (!localStorage.token) {
-            this.props.history.push('/login')
+        if (!this.props.user.admin) {
+            this.props.history.push('/')
         }
     }
 
     render() {
+        console.log(this.props.user)
         return (
             <div class='container'>
                 <Form onChange={this.onChange}>
