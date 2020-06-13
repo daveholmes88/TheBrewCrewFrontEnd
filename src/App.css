@@ -1,12 +1,12 @@
 #left-container {
-  position: fixed;
-  top: 19px;
-  bottom: 0px;
+  width: '50%';
+  right: '50%'
+  /* top: 19px;
+  bottom: 0px; */
 }
 
 #right-container {
   top: 20px;
-  left: 600px;
 }
 
 .marker-btn {

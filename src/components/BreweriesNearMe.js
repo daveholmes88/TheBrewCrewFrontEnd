@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactMapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
 import { Link } from 'react-router-dom';
 import { Card, Form, Button, Spinner, Container, Row, Col, Alert } from 'react-bootstrap';
+// import "./scrollbar.css";
 
 class BreweriesNearMe extends Component {
   constructor() {
@@ -127,8 +128,6 @@ class BreweriesNearMe extends Component {
         < Row md={2} >
           <Col id='left-container'>
             <br></br>
-            <br></br>
-            <br></br>
             <Form inline='true'>
               <Form.Group>
                 <Form.Label>Location</Form.Label>
@@ -157,7 +156,7 @@ class BreweriesNearMe extends Component {
                 </Popup> : null}
             </ReactMapGL>
           </Col>
-          <Col id='right-container'>
+          <Col id='right-container' scrollable='true'>
             <Form inline='true'>
               <Form.Label>Filter Results</Form.Label>
               <Form.Control type='text' placeholder='Brewery Name' onChange={this.handleName} value={this.state.searchName}></Form.Control>
@@ -165,6 +164,7 @@ class BreweriesNearMe extends Component {
             <br></br>
             {this.state.breweries.length > 0 ? this.renderBreweries() : null}
           </Col>
+
         </Row >
       </Container >
     );
