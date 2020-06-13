@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import ReactMapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
 import { Link } from 'react-router-dom';
 import { Card, Form, Button, Spinner, Container, Row, Col, Alert } from 'react-bootstrap';
-// import "./scrollbar.css";
 
 class BreweriesNearMe extends Component {
   constructor() {
@@ -125,7 +124,7 @@ class BreweriesNearMe extends Component {
               <span className="sr-only">Loading...</span>
             </Spinner> : null
         }
-        < Row md={2} >
+        <Row sm={2} >
           <Col id='left-container'>
             <br></br>
             <Form inline='true'>
