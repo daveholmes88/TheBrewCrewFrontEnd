@@ -7,7 +7,8 @@ An application to find breweries in any location in the United States while rati
 Demo:
 
 A video demo of Hops Along is available here https://www.youtube.com/watch?v=zJWot-iI_XQ&t=
-
+Try it yourself. https://hopsalong.herokuapp.com/
+If you have problems with the website please contact me at DaveHolmes88@gmail.com
 
 Usage and Features:
 
