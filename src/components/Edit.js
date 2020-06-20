@@ -36,7 +36,7 @@ class Edit extends Component {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Zip Code</Form.Label>
-                        <Form.Control name='zip_code' type="text" placeholder="Brewery Zip" value={brewery.zip} />
+                        <Form.Control name='zip' type="text" placeholder="Brewery Zip" value={brewery.zip} />
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Country</Form.Label>
