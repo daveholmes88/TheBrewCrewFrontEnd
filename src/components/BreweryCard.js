@@ -18,6 +18,14 @@ class BreweryCard extends Component {
             .then(breweries => console.log(breweries))
     }
 
+    phonebrewery = phone => {
+        let phoneArray = phone.split('')
+        phoneArray.unshift('(')
+        phoneArray.splice(4, 0, ')')
+        phoneArray.splice(8, 0, '-')
+        return < Card.Text class='text-center' > {phoneArray}</Card.Text >
+    }
+
     render() {
         const { brewery, user } = this.props
 
@@ -28,7 +36,7 @@ class BreweryCard extends Component {
                         <Card.Title class='text-center' onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></Card.Title>
                         <Card.Text class='text-center'>{brewery.address} {brewery.city}, {brewery.state}, {brewery.zip}</Card.Text>
                         <a href={brewery.website} target='_blank' rel='noopener noreferrer'><Card.Text class='text-center'>Website</Card.Text></a>
-                        <Card.Text class='text-center'>{brewery.phone}</Card.Text>
+                        {brewery.phone ? this.phonebrewery(brewery.phone) : null}
                         {user.admin ? <Button variant='primary' onClick={this.deleteBrewery}>Delete Brewery</Button> : null}
                     </Card.Body>
                 </Card>
