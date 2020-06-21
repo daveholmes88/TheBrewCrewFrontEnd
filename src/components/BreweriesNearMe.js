@@ -138,7 +138,7 @@ class BreweriesNearMe extends Component {
             <ReactMapGL {...viewport}
               mapStyle='mapbox://styles/daveholmes88/ck8yhbgr259vz1itbn285ffo0'
               mapboxApiAccessToken={mapboxToken}
-              width="40vw"
+              width="100%"
               height="100vh"
               onViewportChange={viewport => this.setState({ viewport })}>
               <GeolocateControl
