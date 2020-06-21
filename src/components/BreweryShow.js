@@ -28,9 +28,13 @@ class BreweryShow extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            viewport: { longitude: this.props.brewery.longitude, latitude: this.props.brewery.latitude, zoom: 13 },
-        })
+        if (this.props.brewery.name) {
+            this.setState({
+                viewport: { longitude: this.props.brewery.longitude, latitude: this.props.brewery.latitude, zoom: 13 },
+            })
+        } else {
+            this.props.history.push('/')
+        }
     }
 
     handleEdit = () => {
@@ -42,6 +46,12 @@ class BreweryShow extends Component {
         this.setState({
             selected: true
         })
+    }
+
+    createLink = () => {
+        const breweryName = this.props.brewery.name.replace(/ /g, "+")
+        const linkString = breweryName.concat(`+${this.props.brewery.city}`)
+        return `https://google.com/maps/place/${linkString}`
     }
 
 
@@ -56,21 +66,20 @@ class BreweryShow extends Component {
                         <ReactMapGL {...this.state.viewport}
                             mapboxApiAccessToken={mapboxToken}
                             mapStyle='mapbox://styles/daveholmes88/ck8yhbgr259vz1itbn285ffo0'
-                            width="38vw"
-                            height="90vh"
+                            width="100%"
+                            height="140%"
                             onViewportChange={viewport => this.setState({ viewport })}>
                             <Marker key={brewery.id} longitude={parseFloat(brewery.longitude)} latitude={parseFloat(brewery.latitude)} >
                                 <button class='marker-btn' onClick={this.handleClick}>
                                     <img src='../../beer-mug.png' alt='brewery icon' />
                                 </button>
-                                {this.state.selected ?
-                                    <Popup
-                                        latitude={brewery.latitude}
-                                        longitude={brewery.longitude}>
-                                        {/* onClose={() => this.setState({ selected: false })} */}
-                                        <a href={`http://www.google.com/maps`} target='_blank' rel='noopener noreferrer'>Directions</a>
-                                    </Popup> : null}
                             </Marker>
+                            {this.state.selected ?
+                                <Popup
+                                    latitude={brewery.latitude}
+                                    longitude={brewery.longitude} >
+                                    <a href={this.createLink()} target='_blank' rel='noopener noreferrer'>Directions</a>
+                                </Popup> : null}
                         </ReactMapGL>
                     </Col>
                     <Col>

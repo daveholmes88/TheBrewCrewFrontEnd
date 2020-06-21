@@ -18,24 +18,7 @@ class App extends Component {
       currentUser: '',
       ratings: [],
       breweries: [],
-      showBrewery: {
-        address: "4419 W Montrose Ave",
-        bearing: "206.043987426054",
-        brewery_type: "brewpub",
-        city: "Chicago",
-        country: "United States",
-        created_at: "2020-06-11T17:41:37.617Z",
-        distance: 1.6392438446458293,
-        id: 6263,
-        latitude: 41.960549,
-        longitude: -87.73934,
-        name: "Old Irving Brewing Co.",
-        phone: "7739166421",
-        state: "Illinois",
-        updated_at: "2020-06-11T17:41:37.617Z",
-        website: "http://www.oldirvingbrewing.com",
-        zip: 60641
-      },
+      showBrewery: {},
       search: null,
       rating: null,
       notes: '',
@@ -298,3 +281,21 @@ class App extends Component {
 }
 
 export default App;
+
+// address: "4419 W Montrose Ave",
+//         bearing: "206.043987426054",
+//         brewery_type: "brewpub",
+//         city: "Chicago",
+//         country: "United States",
+//         created_at: "2020-06-11T17:41:37.617Z",
+//         distance: 1.6392438446458293,
+//         id: 6263,
+//         latitude: 41.960549,
+//         longitude: -87.73934,
+//         name: "Old Irving Brewing Co.",
+//         phone: "7739166421",
+//         state: "Illinois",
+//         updated_at: "2020-06-11T17:41:37.617Z",
+//         website: "http://www.oldirvingbrewing.com",
+//         zip: 60641
+
