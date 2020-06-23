@@ -4,8 +4,8 @@ import { Container, Form, Button } from 'react-bootstrap';
 class Edit extends Component {
 
     componentDidMount() {
-        if (!this.props.user.admin) {
-            this.props.history.push('/')
+        if (this.props.user.admin === true) {
+            console.log('welcome admin')
         }
     }
 
@@ -49,6 +49,14 @@ class Edit extends Component {
                     <Form.Group>
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control name='phone' type="text" placeholder="Brewery Phone Number" value={brewery.phone} />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Latitude</Form.Label>
+                        <Form.Control name='latitude' type="text" placeholder="Brewery Latitude" value={brewery.latitude} />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Phone Number</Form.Label>
+                        <Form.Control name='longitude' type="text" placeholder="Brewery Longitude" value={brewery.longitude} />
                     </Form.Group>
                     <Button onClick={this.props.editSubmit} variant="primary" type="submit">
                         Edit Brewery
