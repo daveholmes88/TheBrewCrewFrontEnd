@@ -42,7 +42,6 @@ class BreweryShow extends Component {
     }
 
     handleClick = () => {
-        debugger
         this.setState({
             selected: true
         })
@@ -57,7 +56,7 @@ class BreweryShow extends Component {
 
     render() {
         const { brewery } = this.props
-        console.log(brewery.website)
+        console.log(brewery)
         const mapboxToken = 'pk.eyJ1IjoiZGF2ZWhvbG1lczg4IiwiYSI6ImNrOG5yYjY1MDExZnYzbHBoMHpvMGF5amkifQ.dsX_hdTiU-7GeB3vvGbS6Q'
         return (
             <Container>
