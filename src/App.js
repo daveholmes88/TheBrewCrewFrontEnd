@@ -24,7 +24,8 @@ class App extends Component {
       notes: '',
       number: 0,
       edit: {},
-      ratingAlert: false
+      ratingAlert: false,
+      allUsers: []
     }
 
   }
@@ -243,7 +244,8 @@ class App extends Component {
               breweryShow={this.breweryShow}
               user={this.state.currentUser} />} />
             <Route exact path='/' render={routerProps => <BreweriesNearMe {...routerProps}
-              breweryShow={this.breweryShow} />} />
+              breweryShow={this.breweryShow}
+              user={this.state.currentUser} />} />
             <Route exact path='/login' render={routerProps => <Login {...routerProps}
               loginUser={this.loginUser} />} />
             <Route exact path='/show' render={routerProps => <BreweryShow {...routerProps}
