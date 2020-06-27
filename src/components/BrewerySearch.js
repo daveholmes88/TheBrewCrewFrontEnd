@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import BreweryCard from './BreweryCard';
 import { Link } from 'react-router-dom';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 
 class BrewerySearch extends Component {
     constructor() {
@@ -37,10 +37,14 @@ class BrewerySearch extends Component {
             })
         }
         return searchedBreweries.map(brewery => {
-            return <BreweryCard brewery={brewery}
-                key={brewery.id}
-                breweryShow={this.props.breweryShow}
-                user={this.props.user} />
+            return <div class='container-fluid d-flex align-items-center col-sm-6 col-md-3 overflow-auto'>
+                <Card border='warning' style={{ height: '15rem', width: '18rem' }}>
+                    <BreweryCard brewery={brewery}
+                        key={brewery.id}
+                        breweryShow={this.props.breweryShow}
+                        user={this.props.user} />
+                </Card>
+            </div>
         })
     }
 

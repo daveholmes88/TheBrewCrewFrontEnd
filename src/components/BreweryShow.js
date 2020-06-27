@@ -14,10 +14,6 @@ class BreweryShow extends Component {
         }
     }
 
-    // componentDidMount() {
-    //     if (!this.props.brewery.name)
-    // }
-
     breweryRating = () => {
         const breweryRatings = this.props.ratings.filter(rating => {
             return rating.brewery_id === this.props.brewery.id
@@ -53,6 +49,13 @@ class BreweryShow extends Component {
         return `https://google.com/maps/place/${linkString}`
     }
 
+    phonebrewery = phone => {
+        let phoneArray = phone.split('')
+        phoneArray.unshift('(')
+        phoneArray.splice(4, 0, ')')
+        phoneArray.splice(8, 0, '-')
+        return < Card.Text class='text-center' > {phoneArray}</Card.Text >
+    }
 
     render() {
         const { brewery } = this.props
@@ -83,11 +86,11 @@ class BreweryShow extends Component {
                     </Col>
                     <Col>
                         <Card border='warning'>
-                            <Card.Body>
+                            <Card.Body className='text-center'>
                                 <Card.Title><h1>{brewery.name}</h1></Card.Title>
                                 <Card.Text>{brewery.address} {brewery.city}, {brewery.state}, {brewery.zip}</Card.Text>
                                 <a href={brewery.website} target='_blank' rel='noopener noreferrer'>{brewery.name}'s Website</a>
-                                <Card.Text>{brewery.phone}</Card.Text>
+                                {brewery.phone ? this.phonebrewery(brewery.phone) : null}
                                 {this.breweryRating() ? <p>Global Rating: {this.breweryRating()}</p> : null}
                                 <Form>
                                     <Form.Group className="form-input rating">

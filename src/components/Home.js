@@ -7,8 +7,6 @@ class Home extends Component {
     constructor() {
         super()
         this.state = {
-            myBreweries: [],
-            myRatings: [],
             search: '',
             searchName: null
         }
@@ -33,15 +31,15 @@ class Home extends Component {
             const rating = myRatings.filter(rating => rating.brewery_id === brewery.id)
             const allRatings = this.props.ratings.filter(rating => rating.brewery_id === brewery.id)
             const allNumbers = allRatings.map(rating => rating.number)
-            const averageRating = allNumbers.reduce((a,b) => a + b, 0) / allNumbers.length
-            return(
+            const averageRating = allNumbers.reduce((a, b) => a + b, 0) / allNumbers.length
+            return (
                 <tr key={brewery.id}>
                     <td onClick={() => this.props.breweryShow(brewery)}><Link to='/show' class='text-primary'>{brewery.name}</Link></td>
                     <td class='text-center'>{brewery.brewery_type}</td>
                     <td class='text-center'><StarRatingConstant
-                                    numberOfStars={rating[0].number}
-                                    currentRating={rating[0].number}
-                                /></td>
+                        numberOfStars={rating[0].number}
+                        currentRating={rating[0].number}
+                    /></td>
                     <td class='text-center'>{averageRating}</td>
                     <td class='text-center'>{brewery.address}</td>
                     <td class='text-center'>{brewery.city}</td>
@@ -71,25 +69,25 @@ class Home extends Component {
 
     handleName = event => {
         this.setState({
-          searchName: event.target.value
+            searchName: event.target.value
         })
-      }
+    }
 
     render() {
-        return(
+        return (
             <Container>
                 <Row sm={2}>
                     <Col>
-                <Link to='/' >
-                    <Button variant='primary'>Breweries Near Me</Button>
-                </Link>
-                    <Form inline='true'>
-                        <Form.Group>
-                            <Form.Label>Location</Form.Label>
-                            <Form.Control type='text' onChange={this.handleChange} value={this.state.search} placeholder='City or State'/>
-                        </Form.Group>
-                        <Button variant='primary' type='submit' onClick={this.handleSearch} >Search</Button>
-                    </Form>
+                        <Link to='/' >
+                            <Button variant='primary'>Breweries Near Me</Button>
+                        </Link>
+                        <Form inline='true'>
+                            <Form.Group>
+                                <Form.Label>Location</Form.Label>
+                                <Form.Control type='text' onChange={this.handleChange} value={this.state.search} placeholder='City or State' />
+                            </Form.Group>
+                            <Button variant='primary' type='submit' onClick={this.handleSearch} >Search</Button>
+                        </Form>
                     </Col>
                     <Col>
                         <br></br>
@@ -99,7 +97,7 @@ class Home extends Component {
                         </Form>
                     </Col>
                 </Row>
-                <Table bordered hover variant='secondary' style={{width: '100%'}}>
+                <Table bordered hover variant='secondary' style={{ width: '100%' }}>
                     <tbody>
                         <tr>
                             <th>Name</th>
