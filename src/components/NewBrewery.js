@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
+import { config } from "../Constants";
+
+const API_AdminNew = config.url.API_AdminNew
+
 class NewBrewery extends Component {
     constructor() {
         super()
         this.state = {
-            name: '',
-            kind: '',
-            address: '',
-            city: '',
-            state: '',
-            zip_code: '',
-            country: '',
-            website: '',
-            phone_number: ''
+            name: 'Revolution',
+            kind: 'macro',
+            address: '3340 N Kedzie',
+            city: 'Chicago',
+            state: 'Illinois',
+            zip_code: '60618',
+            country: 'United States',
+            website: 'https://revbrew.com/age?redirect=https://revbrew.com/',
+            phone_number: '7735882267'
         }
     }
 
@@ -32,18 +36,13 @@ class NewBrewery extends Component {
             },
             body: JSON.stringify(this.state)
         }
-        fetch('https://tranquil-earth-85240.herokuapp.com/breweries', newBrewery)
+        fetch(API_AdminNew, newBrewery)
             .then(resp => resp.json())
             .then(data => {
-                this.props.breweryShow(data)
-                this.props.history.push('/show')
+                console.log(data)
+                // this.props.breweryShow(data)
+                // this.props.history.push('/show')
             })
-    }
-
-    componentDidMount() {
-        if (!this.props.user.admin) {
-            this.props.history.push('/')
-        }
     }
 
     render() {

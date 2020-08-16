@@ -3,6 +3,8 @@ import BreweryCard from './BreweryCard';
 import { Link } from 'react-router-dom';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 
+
+
 class BrewerySearch extends Component {
     constructor() {
         super()

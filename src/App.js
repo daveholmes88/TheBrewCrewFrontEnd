@@ -10,6 +10,12 @@ import Home from './components/Home';
 import BrewNavbar from './components/Navbar';
 import Edit from './components/Edit';
 import history from "./history";
+import Admin from "./components/Admin"
+import { config } from "./Constants";
+
+const API_Ratings = config.url.API_Ratings
+const API_Breweries = config.url.API_Breweries
+const API_Users = config.url.API_Users
 
 class App extends Component {
   constructor() {
@@ -40,7 +46,7 @@ class App extends Component {
   }
 
   breweryFetch = () => {
-    fetch('https://tranquil-earth-85240.herokuapp.com/breweries')
+    fetch(API_Breweries)
       .then(resp => resp.json())
       .then(data => {
         this.setState({
@@ -58,7 +64,7 @@ class App extends Component {
         "Authorization": `Bearer ${token}`
       }
     }
-    fetch('https://tranquil-earth-85240.herokuapp.com/users', reqObj)
+    fetch(API_Users, reqObj)
       .then(resp => resp.json())
       .then(data => {
         this.setState({
@@ -159,7 +165,7 @@ class App extends Component {
         user_id: this.state.currentUser.id
       })
     }
-    fetch('https://tranquil-earth-85240.herokuapp.com/ratings', createObj)
+    fetch(API_Ratings, createObj)
       .then(resp => resp.json())
       .then(ratings => {
         this.setState({
@@ -181,7 +187,7 @@ class App extends Component {
         notes: this.state.notes
       })
     }
-    fetch(`https://tranquil-earth-85240.herokuapp.com/ratings/${this.state.rating.id}`, updateObj)
+    fetch(`API_Ratings/${this.state.rating.id}`, updateObj)
       .then(resp => resp.json())
       .then((ratings => {
         this.setState({
@@ -218,7 +224,7 @@ class App extends Component {
         brewery: this.state.edit
       })
     }
-    fetch(`https://tranquil-earth-85240.herokuapp.com/breweries/${this.state.edit.id}`, editBrewery)
+    fetch(`API_Breweries/${this.state.edit.id}`, editBrewery)
       .then(resp => resp.json())
       .then(data => {
         this.setState({
@@ -275,6 +281,8 @@ class App extends Component {
               handleEditChange={this.handleEditChange}
               editSubmit={this.editSubmit}
               user={this.state.currentUser} />} />
+            <Route exact path='/admin' render={routerProps => <Admin {...routerProps}
+            />} />
           </Switch>
         </div>
       </Router>
