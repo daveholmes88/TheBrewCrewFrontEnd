@@ -18,7 +18,7 @@ class BrewNavbar extends React.Component {
     }
 
     searchBreweries = () => {
-        return  this.props.breweries.map(brewery => brewery.name)
+        return this.props.breweries.map(brewery => brewery.name)
     }
 
     render() {
@@ -27,7 +27,7 @@ class BrewNavbar extends React.Component {
                 <Container>
                     <Nav>
                         <Nav.Item>
-                            <h3 class='text-primary'>Hops Along</h3>
+                            <h3 className='text-primary'>Hops Along</h3>
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link href="/">Near Me</Nav.Link>
@@ -36,7 +36,7 @@ class BrewNavbar extends React.Component {
                             <Nav.Link href="/search">Search</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                           <Nav.Link href="/home">Your Breweries</Nav.Link>
+                            <Nav.Link href="/home">Your Breweries</Nav.Link>
                         </Nav.Item>
                         <Typeahead
                             id='search-bar'

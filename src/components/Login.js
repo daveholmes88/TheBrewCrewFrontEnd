@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Form, Button, Alert, Container, Row, Col, } from 'react-bootstrap'
 
+import { config } from "../Constants";
+
+const API_Users = config.url.API_Users
+
 class Login extends Component {
     constructor() {
         super()
@@ -37,7 +41,7 @@ class Login extends Component {
                 password: this.state.password
             })
         }
-        fetch('https://tranquil-earth-85240.herokuapp.com/users/1', reqUser)
+        fetch(`${API_Users}/1`, reqUser)
             .then(resp => resp.json())
             .then(data => {
                 if (data.error) {
@@ -78,7 +82,7 @@ class Login extends Component {
                 email: this.state.email
             })
         }
-        fetch('https://tranquil-earth-85240.herokuapp.com/users', reqUser)
+        fetch(API_Users, reqUser)
             .then(resp => resp.json())
             .then(data => {
                 console.log(data)

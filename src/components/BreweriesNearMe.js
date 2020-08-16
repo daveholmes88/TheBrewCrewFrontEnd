@@ -4,6 +4,9 @@ import ReactMapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
 import { Card, Form, Button, Spinner, Container, Row, Col, Alert } from 'react-bootstrap';
 
 import BreweryCard from './BreweryCard';
+import { config } from "../Constants";
+
+const API_Descriptions = config.url.API_Descriptions
 
 class BreweriesNearMe extends Component {
   constructor() {
@@ -26,7 +29,7 @@ class BreweriesNearMe extends Component {
   }
 
   locationFetch = newLocation => {
-    fetch('https://tranquil-earth-85240.herokuapp.com/descriptions', newLocation)
+    fetch(API_Descriptions, newLocation)
       .then(resp => resp.json())
       .then(data => {
         if (data.error) {
