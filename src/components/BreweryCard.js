@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Card, Button } from 'react-bootstrap';
+import { config } from "../Constants";
+
+const API_Breweries = config.url.API_Breweries
 
 class BreweryCard extends Component {
 
@@ -13,7 +16,7 @@ class BreweryCard extends Component {
             },
             body: JSON.stringify({ id: this.props.brewery.id })
         }
-        fetch(`https://tranquil-earth-85240.herokuapp.com/breweries/${this.props.brewery.id}`, deleteObj)
+        fetch(`${API_Breweries}/${this.props.brewery.id}`, deleteObj)
             .then(resp => resp.json())
             .then(breweries => console.log(breweries))
     }

@@ -50,7 +50,16 @@ class Admin extends Component {
     }
 
     addBrewery = brewery => {
-
+        const newObj = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(brewery)
+        }
+        fetch(API_Breweries, newObj)
+            .then(resp => resp.json())
+            .then(data => console.log(data))
     }
 
     deleteBrewery = brewery => {
