@@ -4,8 +4,8 @@ import { Container, Form, Button } from 'react-bootstrap';
 class Edit extends Component {
 
     componentDidMount() {
-        if (this.props.user.admin === true) {
-            console.log('welcome admin')
+        if (!localStorage.token) {
+            this.props.history.push('/login')
         }
     }
 

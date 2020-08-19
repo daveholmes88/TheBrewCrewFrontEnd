@@ -9,15 +9,21 @@ class NewBrewery extends Component {
     constructor() {
         super()
         this.state = {
-            name: 'Revolution',
-            kind: 'macro',
-            address: '3340 N Kedzie',
-            city: 'Chicago',
-            state: 'Illinois',
-            zip_code: '60618',
-            country: 'United States',
-            website: 'https://revbrew.com/age?redirect=https://revbrew.com/',
-            phone_number: '7735882267'
+            name: '',
+            kind: '',
+            address: '',
+            city: '',
+            state: '',
+            zip_code: '',
+            country: '',
+            website: '',
+            phone_number: ''
+        }
+    }
+
+    componentDidMount() {
+        if (!localStorage.token) {
+            this.props.history.push('/login')
         }
     }
 

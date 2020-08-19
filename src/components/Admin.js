@@ -50,7 +50,7 @@ class Admin extends Component {
     }
 
     addBrewery = brewery => {
-        console.log('++++++++++++++++++++++++')
+
     }
 
     deleteBrewery = brewery => {
