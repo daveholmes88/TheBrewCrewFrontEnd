@@ -89,7 +89,7 @@ class BrewerySearch extends Component {
                     {this.state.search || this.props.search ? this.renderBreweries() : null}
                 </Row>
                 <br></br>
-                {this.props.user.admin && (this.state.search || this.props.search) ? <h4><Link to='/new'>Create A New Brewery</Link></h4> : null}
+                {this.state.search || this.props.search ? <h4><Link to='/new'>Create A New Brewery</Link></h4> : null}
             </Container>
         )
     }
