@@ -5,13 +5,15 @@ import { config } from "../Constants";
 
 const API_Breweries = config.url.API_Breweries
 const API_AdminNew = config.url.API_AdminNew
+const API_Users = config.url.API_Users
 
 class Admin extends Component {
     constructor() {
         super()
         this.state = {
             breweries: [],
-            users: []
+            users: [],
+            edits: []
         }
     }
 
@@ -21,7 +23,8 @@ class Admin extends Component {
             .then(data =>
                 this.setState({
                     breweries: data.breweries,
-                    users: data.users
+                    users: data.users,
+                    edits: data.edits,
                 })
             )
             .catch(err => console.log(err))
@@ -43,7 +46,7 @@ class Admin extends Component {
                     <td class='text-center'>{brewery.phone}</td>
                     <td class='text-center'>{brewery.website}</td>
                     <td class='text-center'><Button onClick={() => this.addBrewery(brewery)}>+</Button></td>
-                    <td class='text-center'><Button onClick={() => this.deleteBrewery(brewery)}>-</Button></td>
+                    <td class='text-center'><Button onClick={() => this.deleteNewBrewery(brewery)}>-</Button></td>
                 </tr >
             )
         })
@@ -62,8 +65,21 @@ class Admin extends Component {
             .then(data => console.log(data))
     }
 
-    deleteBrewery = brewery => {
-        console.log('-------------------------')
+    deleteNewBrewery = brewery => {
+        const deleteAdminNew = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ id: brewery.id })
+        }
+        fetch(`${API_AdminNew}/${brewery.id}`, deleteAdminNew)
+            .then(resp => resp.json())
+            .then(data =>
+                this.setState({
+                    breweries: data
+                }))
     }
 
     renderUsers = () => {
@@ -79,24 +95,44 @@ class Admin extends Component {
     }
 
     makeAdmin = user => {
-        console.log('++++++++++++++++++++++++++++++++++++')
+        const admin = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ id: user.id })
+        }
+        fetch(`${API_Users}/${user.id}`, admin)
+            .then(resp => resp.json())
+            .then(data => console.log(data))
+        //     {
+        //     this.setState({
+        //         users: data
+        //     })
+        // })
+    }
+
+    addEdit = event => {
+        event.preventDefault()
+        const editBrewery = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                brewery: this.state.edit
+            })
+        }
+        fetch(`API_Breweries/${this.state.edit.id}`, editBrewery)
+            .then(resp => resp.json())
+            .then(data => console.log(data))
     }
 
     render() {
         console.log(this.state)
         return (
             <Container>
-                <h1>Users: {this.state.users.length}</h1>
-                <Table variant='secondary' style={{ width: '100%' }}>
-                    <tbody>
-                        <tr>
-                            <th>UserName</th>
-                            <th class='text-center'>Email</th>
-                            <th class='text-center'>Make Admin</th>
-                        </tr>
-                        {this.renderUsers()}
-                    </tbody>
-                </Table>
                 <h1>New Breweries</h1>
                 <Table variant='secondary' style={{ width: '100%' }}>
                     <tbody>
@@ -116,6 +152,17 @@ class Admin extends Component {
                             <th class='text-center'>Delete</th>
                         </tr>
                         {this.renderNewBreweries()}
+                    </tbody>
+                </Table>
+                <h1>Users: {this.state.users.length}</h1>
+                <Table variant='secondary' style={{ width: '100%' }}>
+                    <tbody>
+                        <tr>
+                            <th>UserName</th>
+                            <th class='text-center'>Email</th>
+                            <th class='text-center'>Make Admin</th>
+                        </tr>
+                        {this.renderUsers()}
                     </tbody>
                 </Table>
             </Container>
