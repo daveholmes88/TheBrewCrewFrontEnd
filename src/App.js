@@ -16,6 +16,7 @@ import { config } from "./Constants";
 const API_Ratings = config.url.API_Ratings
 const API_Breweries = config.url.API_Breweries
 const API_Users = config.url.API_Users
+const API_AdminEdits = config.url.API_AdminEdits
 
 class App extends Component {
   constructor() {
