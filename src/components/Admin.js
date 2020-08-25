@@ -32,24 +32,28 @@ class Admin extends Component {
 
     renderNewBreweries = () => {
         return this.state.breweries.map(brewery => {
-            return (
-                <tr key={brewery.id}>
-                    <td>{brewery.name}</td>
-                    <td class='text-center'>{brewery.brewery_type}</td>
-                    <td class='text-center'>{brewery.address}</td>
-                    <td class='text-center'>{brewery.city}</td>
-                    <td class='text-center'>{brewery.state}</td>
-                    <td class='text-center'>{brewery.zip}</td>
-                    <td class='text-center'>{brewery.country}</td>
-                    <td class='text-center'>{brewery.longitude}</td>
-                    <td class='text-center'>{brewery.latitude}</td>
-                    <td class='text-center'>{brewery.phone}</td>
-                    <td class='text-center'>{brewery.website}</td>
-                    <td class='text-center'><Button onClick={() => this.addBrewery(brewery)}>+</Button></td>
-                    <td class='text-center'><Button onClick={() => this.deleteNewBrewery(brewery)}>-</Button></td>
-                </tr >
-            )
+            this.renderBreweries(brewery)
         })
+    }
+
+    renderBreweries = brewery => {
+        return (
+            <tr key={brewery.id}>
+                <td>{brewery.name}</td>
+                <td class='text-center'>{brewery.brewery_type}</td>
+                <td class='text-center'>{brewery.address}</td>
+                <td class='text-center'>{brewery.city}</td>
+                <td class='text-center'>{brewery.state}</td>
+                <td class='text-center'>{brewery.zip}</td>
+                <td class='text-center'>{brewery.country}</td>
+                <td class='text-center'>{brewery.longitude}</td>
+                <td class='text-center'>{brewery.latitude}</td>
+                <td class='text-center'>{brewery.phone}</td>
+                <td class='text-center'>{brewery.website}</td>
+                <td class='text-center'><Button onClick={() => this.addBrewery(brewery)}>+</Button></td>
+                <td class='text-center'><Button onClick={() => this.deleteNewBrewery(brewery)}>-</Button></td>
+            </tr >
+        )
     }
 
     addBrewery = brewery => {
@@ -105,12 +109,12 @@ class Admin extends Component {
         }
         fetch(`${API_Users}/${user.id}`, admin)
             .then(resp => resp.json())
-            .then(data => console.log(data))
-        //     {
-        //     this.setState({
-        //         users: data
-        //     })
-        // })
+            .then(data => {
+                this.setState({
+                    users: data.users
+                })
+            })
+            .catch(err => console.log(err))
     }
 
     addEdit = event => {
@@ -127,6 +131,12 @@ class Admin extends Component {
         fetch(`API_Breweries/${this.state.edit.id}`, editBrewery)
             .then(resp => resp.json())
             .then(data => console.log(data))
+    }
+
+    renderEditBreweries = () => {
+        this.state.edits.map(brewery => {
+            return this.renderBreweries(brewery)
+        })
     }
 
     render() {
@@ -152,6 +162,27 @@ class Admin extends Component {
                             <th class='text-center'>Delete</th>
                         </tr>
                         {this.renderNewBreweries()}
+                    </tbody>
+                </Table>
+                <h1>Edit Breweries</h1>
+                <Table variant='secondary' style={{ width: '100%' }}>
+                    <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <th class='text-center'>Type</th>
+                            <th class='text-center'>Address</th>
+                            <th class='text-center'>City</th>
+                            <th class='text-center'>State</th>
+                            <th class='text-center'>Zip</th>
+                            <th class='text-center'>Country</th>
+                            <th class='text-center'>Longitude</th>
+                            <th class='text-center'>Latitude</th>
+                            <th class='text-center'>Phone</th>
+                            <th class='text-center'>Website</th>
+                            <th class='text-center'>Add</th>
+                            <th class='text-center'>Delete</th>
+                        </tr>
+                        {this.renderEditBreweries()}
                     </tbody>
                 </Table>
                 <h1>Users: {this.state.users.length}</h1>
