@@ -6,6 +6,7 @@ import { config } from "../Constants";
 const API_Breweries = config.url.API_Breweries
 const API_AdminNew = config.url.API_AdminNew
 const API_Users = config.url.API_Users
+const API_AdminEdits = config.url.API_AdminEdits
 
 class Admin extends Component {
     constructor() {
@@ -32,28 +33,24 @@ class Admin extends Component {
 
     renderNewBreweries = () => {
         return this.state.breweries.map(brewery => {
-            this.renderBreweries(brewery)
+            return (
+                <tr key={brewery.id}>
+                    <td>{brewery.name}</td>
+                    <td class='text-center'>{brewery.brewery_type}</td>
+                    <td class='text-center'>{brewery.address}</td>
+                    <td class='text-center'>{brewery.city}</td>
+                    <td class='text-center'>{brewery.state}</td>
+                    <td class='text-center'>{brewery.zip}</td>
+                    <td class='text-center'>{brewery.country}</td>
+                    <td class='text-center'>{brewery.longitude}</td>
+                    <td class='text-center'>{brewery.latitude}</td>
+                    <td class='text-center'>{brewery.phone}</td>
+                    <td class='text-center'>{brewery.website}</td>
+                    <td class='text-center'><Button onClick={() => this.addBrewery(brewery)}>+</Button></td>
+                    <td class='text-center'><Button onClick={() => this.deleteNewBrewery(brewery)}>-</Button></td>
+                </tr >
+            )
         })
-    }
-
-    renderBreweries = brewery => {
-        return (
-            <tr key={brewery.id}>
-                <td>{brewery.name}</td>
-                <td class='text-center'>{brewery.brewery_type}</td>
-                <td class='text-center'>{brewery.address}</td>
-                <td class='text-center'>{brewery.city}</td>
-                <td class='text-center'>{brewery.state}</td>
-                <td class='text-center'>{brewery.zip}</td>
-                <td class='text-center'>{brewery.country}</td>
-                <td class='text-center'>{brewery.longitude}</td>
-                <td class='text-center'>{brewery.latitude}</td>
-                <td class='text-center'>{brewery.phone}</td>
-                <td class='text-center'>{brewery.website}</td>
-                <td class='text-center'><Button onClick={() => this.addBrewery(brewery)}>+</Button></td>
-                <td class='text-center'><Button onClick={() => this.deleteNewBrewery(brewery)}>-</Button></td>
-            </tr >
-        )
     }
 
     addBrewery = brewery => {
@@ -134,9 +131,48 @@ class Admin extends Component {
     }
 
     renderEditBreweries = () => {
-        this.state.edits.map(brewery => {
-            return this.renderBreweries(brewery)
+        return this.state.edits.map(brewery => {
+            return (
+                <tr key={brewery.id}>
+                    <td>{brewery.name}</td>
+                    <td class='text-center'>{brewery.brewery_type}</td>
+                    <td class='text-center'>{brewery.address}</td>
+                    <td class='text-center'>{brewery.city}</td>
+                    <td class='text-center'>{brewery.state}</td>
+                    <td class='text-center'>{brewery.zip}</td>
+                    <td class='text-center'>{brewery.country}</td>
+                    <td class='text-center'>{brewery.longitude}</td>
+                    <td class='text-center'>{brewery.latitude}</td>
+                    <td class='text-center'>{brewery.phone}</td>
+                    <td class='text-center'>{brewery.website}</td>
+                    <td class='text-center'><Button onClick={() => this.editBrewery(brewery)}>+</Button></td>
+                    <td class='text-center'><Button onClick={() => this.deleteEditBrewery(brewery)}>-</Button></td>
+                </tr >
+            )
         })
+    }
+
+    editBrewery = (brewery) => {
+        console.log('+++++++++++++++++++++++++')
+    }
+
+    deleteEditBrewery = (brewery) => {
+        const deleteObj = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ id: brewery.id })
+        }
+        fetch(`${API_AdminEdits}/${brewery.id}`, deleteObj)
+            .then(resp => resp.json())
+            .then(data => (
+                this.setState({
+                    edits: data.breweries
+                })
+            ))
+            .catch(err => console.log(err))
     }
 
     render() {

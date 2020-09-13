@@ -5,7 +5,7 @@ const prod = {
         API_Users: 'https://tranquil-earth-85240.herokuapp.com/users',
         API_Descriptions: 'https://tranquil-earth-85240.herokuapp.com/descriptions',
         API_AdminNew: "https://tranquil-earth-85240.herokuapp.com/admin_news",
-        API_AdminEdit: "https://tranquil-earth-85240.herokuapp.com/admin_edits",
+        API_AdminEdits: "https://tranquil-earth-85240.herokuapp.com/admin_edits",
     }
 }
 
@@ -16,7 +16,7 @@ const dev = {
         API_Users: 'http://localhost:3000/users',
         API_Descriptions: 'http://localhost:3000/descriptions',
         API_AdminNew: "http://localhost:3000/admin_news",
-        API_AdminEdit: "http://localhost:3000/admin_edits",
+        API_AdminEdits: "http://localhost:3000/admin_edits",
     }
 }
 

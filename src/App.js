@@ -188,7 +188,7 @@ class App extends Component {
         notes: this.state.notes
       })
     }
-    fetch(`API_Ratings/${this.state.rating.id}`, updateObj)
+    fetch(`${API_Ratings}/${this.state.rating.id}`, updateObj)
       .then(resp => resp.json())
       .then((ratings => {
         this.setState({
@@ -216,8 +216,8 @@ class App extends Component {
 
   editSubmit = event => {
     event.preventDefault()
-    const editBrewery = {
-      method: 'PATCH',
+    const createEditBrewery = {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -225,14 +225,14 @@ class App extends Component {
         brewery: this.state.edit
       })
     }
-    fetch(`API_Breweries/${this.state.edit.id}`, editBrewery)
+    fetch(API_AdminEdits, createEditBrewery)
       .then(resp => resp.json())
       .then(data => {
         this.setState({
           showBrewery: data,
           edit: {}
         })
-        history.push('/show')
+        history.push('/home')
       })
   }
 
@@ -311,3 +311,22 @@ export default App;
 //         zip: 60641
 
 // https://localhost:3000/
+
+// const editBrewery = {
+//   method: 'PATCH',
+//   headers: {
+//     'Content-Type': 'application/json'
+//   },
+//   body: JSON.stringify({
+//     brewery: this.state.edit
+//   })
+// }
+// fetch(`API_Breweries/${this.state.edit.id}`, editBrewery)
+//   .then(resp => resp.json())
+//   .then(data => {
+//     this.setState({
+//       showBrewery: data,
+//       edit: {}
+//     })
+//     history.push('/show')
+//   })
