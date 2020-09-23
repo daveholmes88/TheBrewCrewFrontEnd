@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 
 import { config } from "../Constants";
 
@@ -9,15 +9,16 @@ class NewBrewery extends Component {
     constructor() {
         super()
         this.state = {
-            name: 'Revolution Brewing',
-            kind: 'macro',
-            address: '3340 N Kedzie Ave',
-            city: 'Chicago',
-            state: 'Illinois',
-            zip_code: '60618',
-            country: 'United States',
-            website: 'https://revbrew.com/',
-            phone_number: '7735882267'
+            name: '',
+            kind: '',
+            address: '',
+            city: '',
+            state: '',
+            zip_code: '',
+            country: '',
+            website: '',
+            phone_number: '',
+            alert: false
         }
     }
 
@@ -45,9 +46,9 @@ class NewBrewery extends Component {
         fetch(API_AdminNew, newBrewery)
             .then(resp => resp.json())
             .then(data => {
-                console.log(data)
-                // this.props.breweryShow(data)
-                // this.props.history.push('/show')
+                this.setState({
+                    alert: true
+                })
             })
     }
 
@@ -92,6 +93,7 @@ class NewBrewery extends Component {
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control name='phone_number' type="text" placeholder="Brewery Phone Number" value={this.state.phone_number} />
                     </Form.Group>
+                    {this.state.alert ? <Alert variant='warning'>You've successfully added a brewery to our database. An admin will check and approve it soon. Thanks for being a part of Hops Along.</Alert> : null}
                     <Button onClick={this.onSubmit} variant="primary" type="submit">
                         Add Brewery
                     </Button>
