@@ -46,6 +46,9 @@ class BrewNavbar extends React.Component {
                             options={this.searchBreweries()}
                             placeholder="Search Brewery Name"
                         />
+                        {this.props.user.admin ? <Nav.Item>
+                            <Nav.Link href="/Admin">Admin</Nav.Link>
+                        </Nav.Item> : null}
                     </Nav>
                     <Nav class='justify-content-end'>
                         <Nav.Item >

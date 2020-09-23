@@ -118,9 +118,9 @@ class BreweryShow extends Component {
                                 </Form>
                                 {this.props.ratingAlert ? <Alert variant='warning'>You must be logged in and rate a brewery to save.</Alert> : null}
                                 <br></br>
-                                {this.props.user.admin ? <Link to='/edit'>
+                                <Link to='/edit'>
                                     <Button onClick={this.handleEdit}>Edit Brewery</Button>
-                                </Link> : null}
+                                </Link>
                             </Card.Body>
                         </Card>
                     </Col>
