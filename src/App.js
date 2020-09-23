@@ -233,7 +233,7 @@ class App extends Component {
           edit: {},
           editAlert: true
         })
-        // setTimeouthistory.push('/home')
+        setTimeout(() => { history.push('/home') }, 5000)
       })
   }
 

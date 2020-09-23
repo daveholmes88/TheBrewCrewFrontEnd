@@ -49,6 +49,7 @@ class NewBrewery extends Component {
                 this.setState({
                     alert: true
                 })
+                setTimeout(() => { this.props.history.push('/home') }, 5000)
             })
     }
 
@@ -93,7 +94,7 @@ class NewBrewery extends Component {
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control name='phone_number' type="text" placeholder="Brewery Phone Number" value={this.state.phone_number} />
                     </Form.Group>
-                    {this.state.alert ? <Alert variant='warning'>You've successfully added a brewery to our database. An admin will check and approve it soon. Thanks for being a part of Hops Along.</Alert> : null}
+                    {this.state.alert ? <Alert variant='warning'>You've successfully added a brewery to our database. An admin will check and approve it soon. Thanks for being a part of Hops Along. You will now be redirected back to your home page.</Alert> : null}
                     <Button onClick={this.onSubmit} variant="primary" type="submit">
                         Add Brewery
                     </Button>

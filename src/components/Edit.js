@@ -61,7 +61,7 @@ class Edit extends Component {
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control name='longitude' type="text" placeholder="Brewery Longitude" value={brewery.longitude} />
                     </Form.Group>
-                    {this.props.alert ? <Alert variant='warning'>Your brewery edit has been successfully submitted. An admin will check and approve your edit soon. Thanks for being a part of Hops Along.</Alert> : null}
+                    {this.props.alert ? <Alert variant='warning'>Your brewery edit has been successfully submitted. An admin will check and approve your edit soon. Thanks for being a part of Hops Along. You will now be redirected back to your home page.</Alert> : null}
                     <Button onClick={this.props.editSubmit} variant="primary" type="submit">
                         Edit Brewery
                 </Button>
