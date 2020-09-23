@@ -32,7 +32,8 @@ class App extends Component {
       number: 0,
       edit: {},
       ratingAlert: false,
-      allUsers: []
+      allUsers: [],
+      editAlert: false
     }
 
   }
@@ -229,10 +230,10 @@ class App extends Component {
       .then(resp => resp.json())
       .then(data => {
         this.setState({
-          showBrewery: data,
-          edit: {}
+          edit: {},
+          editAlert: true
         })
-        history.push('/home')
+        // setTimeouthistory.push('/home')
       })
   }
 
@@ -281,7 +282,8 @@ class App extends Component {
               brewery={this.state.edit}
               handleEditChange={this.handleEditChange}
               editSubmit={this.editSubmit}
-              user={this.state.currentUser} />} />
+              user={this.state.currentUser}
+              alert={this.state.editAlert} />} />
             <Route exact path='/admin' render={routerProps => <Admin {...routerProps}
             />} />
           </Switch>
