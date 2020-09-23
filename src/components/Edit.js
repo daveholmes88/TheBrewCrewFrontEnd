@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
+import { Container, Form, Button, Alert } from 'react-bootstrap';
 
 class Edit extends Component {
 
     componentDidMount() {
         if (!localStorage.token) {
             this.props.history.push('/login')
+        }
+        if (!this.props.brewery.id) {
+            this.props.history.push('/')
         }
     }
 
@@ -58,6 +61,7 @@ class Edit extends Component {
                         <Form.Label>Phone Number</Form.Label>
                         <Form.Control name='longitude' type="text" placeholder="Brewery Longitude" value={brewery.longitude} />
                     </Form.Group>
+                    {this.props.alert ? <Alert variant='warning'>Your brewery edit has been successfully submitted. An admin will check and approve your edit soon. Thanks for being a part of Hops Along.</Alert> : null}
                     <Button onClick={this.props.editSubmit} variant="primary" type="submit">
                         Edit Brewery
                 </Button>

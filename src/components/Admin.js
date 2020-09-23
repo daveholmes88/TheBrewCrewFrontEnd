@@ -116,18 +116,7 @@ class Admin extends Component {
 
     addEdit = event => {
         event.preventDefault()
-        const editBrewery = {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                brewery: this.state.edit
-            })
-        }
-        fetch(`API_Breweries/${this.state.edit.id}`, editBrewery)
-            .then(resp => resp.json())
-            .then(data => console.log(data))
+
     }
 
     renderEditBreweries = () => {
@@ -153,7 +142,20 @@ class Admin extends Component {
     }
 
     editBrewery = (brewery) => {
-        console.log('+++++++++++++++++++++++++')
+        debugger
+        const editBrewery = {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                brewery: brewery
+            })
+        }
+        fetch(`${API_Breweries}/${brewery.brewery_id}`, editBrewery)
+            .then(resp => resp.json())
+            .then(data => this.setState({ edits: data }))
+            .catch(err => console.log(err))
     }
 
     deleteEditBrewery = (brewery) => {
@@ -169,7 +171,7 @@ class Admin extends Component {
             .then(resp => resp.json())
             .then(data => (
                 this.setState({
-                    edits: data.breweries
+                    edits: data
                 })
             ))
             .catch(err => console.log(err))
