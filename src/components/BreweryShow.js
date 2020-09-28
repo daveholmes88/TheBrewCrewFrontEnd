@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import StarRating from './StarRating.jsx';
-import ReactMapGL, { Marker, Popup } from "react-map-gl";
+import ReactMapGL, { Marker, Popup, CanvasOverlay } from "react-map-gl";
 import { Card, Button, Alert, Container, Row, Col, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -79,8 +79,9 @@ class BreweryShow extends Component {
                             {this.state.selected ?
                                 <Popup
                                     latitude={brewery.latitude}
-                                    longitude={brewery.longitude} >
-                                    <a href={this.createLink()} target='_blank' rel='noopener noreferrer'>Directions</a>
+                                    longitude={brewery.longitude}
+                                    onClose={() => this.setState({ selected: false })}>
+                                    {brewery.name}
                                 </Popup> : null}
                         </ReactMapGL>
                     </Col>
