@@ -39,7 +39,7 @@ class BrewerySearch extends Component {
             })
         }
         return searchedBreweries.map(brewery => {
-            return <div class='container-fluid d-flex align-items-center col-sm-6 col-md-3 overflow-auto'>
+            return <div class='container-fluid d-flex align-items-center col-sm-12 col-md-6 col-lg-3 overflow-auto'>
                 <Card border='warning' style={{ height: '15rem', width: '18rem' }}>
                     <BreweryCard brewery={brewery}
                         key={brewery.id}
