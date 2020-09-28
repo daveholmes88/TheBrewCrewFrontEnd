@@ -235,6 +235,7 @@ class App extends Component {
         })
         setTimeout(() => { history.push('/home') }, 5000)
       })
+      .catch(err => console.log(err))
   }
 
   render() {
@@ -285,7 +286,7 @@ class App extends Component {
               user={this.state.currentUser}
               alert={this.state.editAlert} />} />
             <Route exact path='/admin' render={routerProps => <Admin {...routerProps}
-            />} />
+              user={this.state.currentUser} />} />
           </Switch>
         </div>
       </Router>

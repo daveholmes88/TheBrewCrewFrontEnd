@@ -19,16 +19,20 @@ class Admin extends Component {
     }
 
     componentDidMount() {
-        fetch(API_AdminNew)
-            .then(resp => resp.json())
-            .then(data =>
-                this.setState({
-                    breweries: data.breweries,
-                    users: data.users,
-                    edits: data.edits,
-                })
-            )
-            .catch(err => console.log(err))
+        if (this.props.user.admin === false || !localStorage.token) {
+            this.props.history.push('/')
+        } else {
+            fetch(API_AdminNew)
+                .then(resp => resp.json())
+                .then(data =>
+                    this.setState({
+                        breweries: data.breweries,
+                        users: data.users,
+                        edits: data.edits,
+                    })
+                )
+                .catch(err => console.log(err))
+        }
     }
 
     renderNewBreweries = () => {
@@ -178,7 +182,7 @@ class Admin extends Component {
     }
 
     render() {
-        console.log(this.state)
+        console.log(this.props.user.admin)
         return (
             <Container>
                 <h1>New Breweries</h1>
