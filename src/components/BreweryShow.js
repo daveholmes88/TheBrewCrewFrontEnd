@@ -3,6 +3,7 @@ import StarRating from './StarRating.jsx';
 import ReactMapGL, { Marker, Popup, CanvasOverlay } from "react-map-gl";
 import { Card, Button, Alert, Container, Row, Col, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+require('dotenv').config()
 
 class BreweryShow extends Component {
 
@@ -60,7 +61,7 @@ class BreweryShow extends Component {
     render() {
         const { brewery } = this.props
         console.log(brewery)
-        const mapboxToken = 'pk.eyJ1IjoiZGF2ZWhvbG1lczg4IiwiYSI6ImNrOG5yYjY1MDExZnYzbHBoMHpvMGF5amkifQ.dsX_hdTiU-7GeB3vvGbS6Q'
+        const mapboxToken = process.env.REACT_APP_MapboxToken
         return (
             <Container>
                 <Row sm={2}>
