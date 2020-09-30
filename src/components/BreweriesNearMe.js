@@ -5,6 +5,7 @@ import { Card, Form, Button, Spinner, Container, Row, Col, Alert } from 'react-b
 
 import BreweryCard from './BreweryCard';
 import { config } from "../Constants";
+require('dotenv').config()
 
 const API_Descriptions = config.url.API_Descriptions
 
@@ -116,7 +117,7 @@ class BreweriesNearMe extends Component {
   }
 
   render() {
-    const mapboxToken = 'pk.eyJ1IjoiZGF2ZWhvbG1lczg4IiwiYSI6ImNrOG5yYjY1MDExZnYzbHBoMHpvMGF5amkifQ.dsX_hdTiU-7GeB3vvGbS6Q'
+    const mapboxToken = process.env.REACT_APP_MapboxToken
     const { viewport, selected } = this.state;
     return (
       <Container>
