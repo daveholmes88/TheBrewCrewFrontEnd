@@ -5,7 +5,6 @@ import { Card, Form, Button, Spinner, Container, Row, Col, Alert } from 'react-b
 
 import BreweryCard from './BreweryCard';
 import { config } from "../Constants";
-require('dotenv').config()
 
 const API_Descriptions = config.url.API_Descriptions
 

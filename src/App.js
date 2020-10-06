@@ -11,6 +11,7 @@ import BrewNavbar from './components/Navbar';
 import Edit from './components/Edit';
 import history from "./history";
 import Admin from "./components/Admin"
+import ContactUs from "./components/ContactUs"
 import { config } from "./Constants";
 
 const API_Ratings = config.url.API_Ratings
@@ -287,6 +288,8 @@ class App extends Component {
               alert={this.state.editAlert} />} />
             <Route exact path='/admin' render={routerProps => <Admin {...routerProps}
               user={this.state.currentUser} />} />
+            <Route exact path='/contact' render={routerProps => <ContactUs {...routerProps}
+            />} />
           </Switch>
         </div>
       </Router>
