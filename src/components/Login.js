@@ -127,7 +127,7 @@ class Login extends Component {
                             <Form onSubmit={this.onSubmitSignup}>
                                 <Form.Group controlId="formBasicEmail">
                                     <Form.Label class='text-primary'>Email:</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter Email" onChange={this.changeEmail} value={this.state.email} />
+                                    <Form.Control type="email" placeholder="Enter Email" onChange={this.changeEmail} value={this.state.email} />
                                     <Form.Text className="text-muted"></Form.Text>
                                 </Form.Group>
                                 <Form.Group controlId="formBasicEmail">
