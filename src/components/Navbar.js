@@ -39,7 +39,7 @@ class BrewNavbar extends React.Component {
                             <Nav.Link href="/home">Your Breweries</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link href="/contact">Contact Us</Nav.Link>
+                            <Nav.Link href="/contact">Contact</Nav.Link>
                         </Nav.Item>
                         <Typeahead
                             id='search-bar'
