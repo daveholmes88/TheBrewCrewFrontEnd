@@ -13,7 +13,6 @@ class ContactUs extends Component {
 
     sendEmail = event => {
         event.preventDefault()
-        debugger
         if (event.target.email.value === '') {
             this.setState({ alert: true })
         } else {

@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import './App.css';
 import { Router, Route, Switch } from 'react-router-dom';
-import Login from './components/Login';
+
+import Admin from "./components/Admin"
 import BreweriesNearMe from './components/BreweriesNearMe';
 import BrewerySearch from './components/BrewerySearch';
 import BreweryShow from './components/BreweryShow';
-import NewBrewery from './components/NewBrewery';
-import Home from './components/Home';
 import BrewNavbar from './components/Navbar';
-import Edit from './components/Edit';
-import history from "./history";
-import Admin from "./components/Admin"
+import Login from './components/Login';
 import ContactUs from "./components/ContactUs"
+import Edit from './components/Edit';
+import Home from './components/Home';
+import NewBrewery from './components/NewBrewery';
+
+import history from "./history";
+import './App.css';
+
 import { config } from "./Constants";
 
 const API_Ratings = config.url.API_Ratings
