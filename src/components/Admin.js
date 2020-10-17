@@ -146,7 +146,6 @@ class Admin extends Component {
     }
 
     editBrewery = (brewery) => {
-        debugger
         const editBrewery = {
             method: 'PATCH',
             headers: {
