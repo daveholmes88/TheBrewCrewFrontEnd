@@ -45,6 +45,7 @@ class BreweriesNearMe extends Component {
               zoom: 13
             },
             searchName: '',
+            searchAddress: '',
             alert: false
           })
         }
@@ -117,11 +118,11 @@ class BreweriesNearMe extends Component {
 
   render() {
     const mapboxToken = process.env.REACT_APP_MapboxToken
-    const { viewport, selected } = this.state;
+    const { viewport, selected, breweries, alert, searchAddress } = this.state;
     return (
       <Container>
         {
-          this.state.breweries.length === 0 ?
+          breweries.length === 0 ?
             <Spinner animation="border" role="status" variant='warning'>
               <span className="sr-only">Loading...</span>
             </Spinner> : null
@@ -132,11 +133,11 @@ class BreweriesNearMe extends Component {
             <Form inline='true'>
               <Form.Group>
                 <Form.Label>Location</Form.Label>
-                <Form.Control type='text' onChange={this.handleChange} value={this.state.searchAddress}></Form.Control>
+                <Form.Control type='text' onChange={this.handleChange} value={searchAddress}></Form.Control>
               </Form.Group>
               <Button onClick={this.onSubmit} variant='primary' type='submit' value='Search'>Search</Button>
             </Form>
-            {this.state.alert ? <Alert key='2' variant='warning'>Couldn't Find Location</Alert> : null}
+            {alert ? <Alert key='2' variant='warning'>Couldn't Find Location</Alert> : null}
             <ReactMapGL {...viewport}
               mapStyle='mapbox://styles/daveholmes88/ck8yhbgr259vz1itbn285ffo0'
               mapboxApiAccessToken={mapboxToken}
@@ -147,8 +148,8 @@ class BreweriesNearMe extends Component {
                 positionOptions={{ enableHighAccuracy: true }}
                 trackUserLocation={true}
               />
-              {this.state.breweries.length > 0 ? this.renderMarkers() : null}
-              {this.state.selected ?
+              {breweries.length > 0 ? this.renderMarkers() : null}
+              {selected ?
                 <Popup
                   latitude={selected.latitude}
                   longitude={selected.longitude}
@@ -163,9 +164,8 @@ class BreweriesNearMe extends Component {
               <Form.Control type='text' placeholder='Brewery Name' onChange={this.handleName} value={this.state.searchName}></Form.Control>
             </Form>
             <br></br>
-            {this.state.breweries.length > 0 ? this.renderBreweries() : null}
+            {breweries.length > 0 ? this.renderBreweries() : null}
           </Col>
-
         </Row >
       </Container >
     );
