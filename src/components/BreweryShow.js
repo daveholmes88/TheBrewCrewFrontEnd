@@ -4,6 +4,8 @@ import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import { Card, Button, Alert, Container, Row, Col, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+import { Mapbox_Token } from "../Constants";
+
 class BreweryShow extends Component {
 
     constructor() {
@@ -60,13 +62,12 @@ class BreweryShow extends Component {
     render() {
         const { brewery } = this.props
         console.log(brewery)
-        const mapboxToken = process.env.REACT_APP_MapboxToken
         return (
             <Container>
                 <Row sm={2}>
                     <Col>
                         <ReactMapGL {...this.state.viewport}
-                            mapboxApiAccessToken={mapboxToken}
+                            mapboxApiAccessToken={Mapbox_Token}
                             mapStyle='mapbox://styles/daveholmes88/ck8yhbgr259vz1itbn285ffo0'
                             width="100%"
                             height="140%"

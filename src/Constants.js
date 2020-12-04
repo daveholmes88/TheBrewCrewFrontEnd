@@ -21,3 +21,5 @@ const dev = {
 }
 
 export const config = process.env.NODE_ENV === "development" ? dev : prod
+
+export const Mapbox_Token = "pk.eyJ1IjoiZGF2ZWhvbG1lczg4IiwiYSI6ImNrOG5yYjY1MDExZnYzbHBoMHpvMGF5amkifQ.dsX_hdTiU-7GeB3vvGbS6Q"

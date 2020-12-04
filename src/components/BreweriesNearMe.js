@@ -4,7 +4,8 @@ import ReactMapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
 import { Card, Form, Button, Spinner, Container, Row, Col, Alert } from 'react-bootstrap';
 
 import BreweryCard from './BreweryCard';
-import { config } from "../Constants";
+import { config, Mapbox_Token } from "../Constants";
+
 
 const API_Descriptions = config.url.API_Descriptions
 
@@ -117,7 +118,6 @@ class BreweriesNearMe extends Component {
   }
 
   render() {
-    const mapboxToken = process.env.REACT_APP_MapboxToken
     const { viewport, selected, breweries, alert, searchAddress } = this.state;
     return (
       <Container>
@@ -140,7 +140,7 @@ class BreweriesNearMe extends Component {
             {alert ? <Alert key='2' variant='warning'>Couldn't Find Location</Alert> : null}
             <ReactMapGL {...viewport}
               mapStyle='mapbox://styles/daveholmes88/ck8yhbgr259vz1itbn285ffo0'
-              mapboxApiAccessToken={mapboxToken}
+              mapboxApiAccessToken={Mapbox_Token}
               width="100%"
               height="100vh"
               onViewportChange={viewport => this.setState({ viewport })}>
