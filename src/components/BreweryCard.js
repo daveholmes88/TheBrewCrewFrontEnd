@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Modal } from 'react-bootstrap';
 import { config } from "../Constants";
 
 const API_Breweries = config.url.API_Breweries
 
 class BreweryCard extends Component {
+    constructor() {
+        super()
+        this.state = {
+            modal: false
+        }
+    }
 
     deleteBrewery = () => {
         const deleteObj = {
@@ -18,7 +24,10 @@ class BreweryCard extends Component {
         }
         fetch(`${API_Breweries}/${this.props.brewery.id}`, deleteObj)
             .then(resp => resp.json())
-            .then(breweries => console.log(breweries))
+            .then(breweries => {
+                console.log(breweries)
+                this.handleClose()
+            })
     }
 
     phonebrewery = phone => {
@@ -29,17 +38,40 @@ class BreweryCard extends Component {
         return < Card.Text class='text-center' > {phoneArray}</Card.Text >
     }
 
+    showModal = () => {
+        this.setState({
+            modal: true
+        })
+    }
+
+    handleClose = () => {
+        this.setState({
+            modal: false
+        })
+    }
+
     render() {
         const { brewery, user } = this.props
-
         return (
-            <Card.Body>
-                <Card.Title class='text-center' onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></Card.Title>
-                <Card.Text class='text-center'>{brewery.address} {brewery.city}, {brewery.state}, {brewery.zip}</Card.Text>
-                <a href={brewery.website} target='_blank' rel='noopener noreferrer'><Card.Text class='text-center'>{brewery.name}'s Website</Card.Text></a>
-                {brewery.phone ? this.phonebrewery(brewery.phone) : null}
-                {user.admin ? <Button variant='primary' onClick={this.deleteBrewery}>Delete Brewery</Button> : null}
-            </Card.Body>
+            <div>
+                <Modal show={this.state.modal} onHide={this.handleClose}>
+                    <Modal.Header>
+                        <Modal.Title>Delete Brewery</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Hello Admin, are you sure you want to delete {`${brewery.name}`}</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant='primary' onClick={this.deleteBrewery}>Delete Brewery</Button>
+                        <Button variant='primary' onClick={this.handleClose}>Close Modal</Button>
+                    </Modal.Footer>
+                </Modal> :
+                <Card.Body>
+                    <Card.Title class='text-center' onClick={() => this.props.breweryShow(brewery)}><Link to='/show'>{brewery.name}</Link></Card.Title>
+                    <Card.Text class='text-center'>{brewery.address} {brewery.city}, {brewery.state}, {brewery.zip}</Card.Text>
+                    <a href={brewery.website} target='_blank' rel='noopener noreferrer'><Card.Text class='text-center'>{brewery.name}'s Website</Card.Text></a>
+                    {brewery.phone ? this.phonebrewery(brewery.phone) : null}
+                    {user.admin ? <Button variant='primary' onClick={this.showModal}>Delete Brewery</Button> : null}
+                </Card.Body>
+            </div>
         )
     }
 }

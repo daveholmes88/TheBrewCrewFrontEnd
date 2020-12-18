@@ -26,7 +26,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      currentUser: '',
+      currentUser: {},
       ratings: [],
       breweries: [],
       showBrewery: {},
