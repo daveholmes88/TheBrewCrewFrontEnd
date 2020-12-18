@@ -43,7 +43,7 @@ class BrewNavbar extends React.Component {
                                 ref="type"
                                 minLength={3}
                                 onChange={this.handleSubmit}
-                                options={this.searchBreweries()}
+                                options={this.searchBreweries}
                                 placeholder="Search Brewery Name"
                             />
                             {this.props.user.admin ? <Nav.Item>
