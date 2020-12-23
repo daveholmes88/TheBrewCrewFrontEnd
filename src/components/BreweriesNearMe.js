@@ -18,7 +18,7 @@ class BreweriesNearMe extends Component {
       breweries: [],
       selected: null,
       searchName: '',
-      alert: false
+      alert: false,
     }
   }
 
@@ -68,7 +68,13 @@ class BreweriesNearMe extends Component {
   }
 
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition((position) => {
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    };
+
+    const success = position => {
       const latitude = position.coords.latitude
       const longitude = position.coords.longitude
       const newLocation = {
@@ -81,8 +87,17 @@ class BreweriesNearMe extends Component {
         })
       }
       this.locationFetch(newLocation)
-    })
+    }
+
+    const error = (err) => {
+      this.setState({
+        alert: true
+      });
+    }
+
+    navigator.geolocation.getCurrentPosition(success, error, options);
   }
+
 
   renderBreweries = () => {
     let breweries = this.state.breweries
@@ -137,7 +152,7 @@ class BreweriesNearMe extends Component {
               </Form.Group>
               <Button onClick={this.onSubmit} variant='primary' type='submit' value='Search'>Search</Button>
             </Form>
-            {alert ? <Alert key='2' variant='warning'>Couldn't Find Location</Alert> : null}
+            {alert ? <Alert key='2' variant='warning'>Couldn't Find Location, please try again.</Alert> : null}
             <ReactMapGL {...viewport}
               mapStyle='mapbox://styles/daveholmes88/ck8yhbgr259vz1itbn285ffo0'
               mapboxApiAccessToken={Mapbox_Token}
