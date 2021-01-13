@@ -19,3 +19,8 @@
   width: 25px;
   height: 25px;
 }
+
+#card-container {
+  overflow-y: scroll;
+  max-height: 900px;
+}

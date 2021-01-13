@@ -33,6 +33,7 @@ class BreweriesNearMe extends Component {
     fetch(API_Descriptions, newLocation)
       .then(resp => resp.json())
       .then(data => {
+        console.log(data)
         if (data.error) {
           this.setState({
             alert: true
@@ -90,6 +91,7 @@ class BreweriesNearMe extends Component {
     }
 
     const error = (err) => {
+      console.log(err)
       this.setState({
         alert: true
       });
@@ -173,13 +175,15 @@ class BreweriesNearMe extends Component {
                 </Popup> : null}
             </ReactMapGL>
           </Col>
-          <Col id='right-container' scrollable='true'>
+          <Col id='right-container'>
             <Form inline='true'>
               <Form.Label>Filter Results</Form.Label>
               <Form.Control type='text' placeholder='Brewery Name' onChange={this.handleName} value={this.state.searchName}></Form.Control>
             </Form>
             <br></br>
-            {breweries.length > 0 ? this.renderBreweries() : null}
+            <div id='card-container'>
+              {breweries.length > 0 ? this.renderBreweries() : null}
+            </div>
           </Col>
         </Row >
       </Container >

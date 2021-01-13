@@ -1,4 +1,8 @@
-This repo houses the frontend code for Hops Along. Please refer here for the project's backend code and installation instructions. https://github.com/daveholmes88/HopsAlongBackend
+This repo houses the frontend code for Hops Along. 
+
+Please refer here for the project's backend code and installation instructions. https://github.com/daveholmes88/HopsAlongBackend
+
+React Native Application for Hops Along can be seen here: https://github.com/daveholmes88/HopsAlongMobile 
 
 Hops Along:
 
