@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import ReactMapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
-// import { Link } from 'react-router-dom';
 import { Card, Form, Button, Spinner, Container, Row, Col, Alert } from 'react-bootstrap';
 
 import { BreweryCard } from '../index';

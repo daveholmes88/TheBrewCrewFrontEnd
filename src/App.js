@@ -22,11 +22,6 @@ import { config } from "./Constants";
 
 const { API_Ratings, API_Users, API_Breweries, API_AdminEdits } = config.url
 
-// const API_Ratings = config.url.API_Ratings
-// const API_Breweries = config.url.API_Breweries
-// const API_Users = config.url.API_Users
-// const API_AdminEdits = config.url.API_AdminEdits
-
 class App extends Component {
   constructor() {
     super()
@@ -323,24 +318,3 @@ export default App;
 //         updated_at: "2020-06-11T17:41:37.617Z",
 //         website: "http://www.oldirvingbrewing.com",
 //         zip: 60641
-
-// https://localhost:3000/
-
-// const editBrewery = {
-//   method: 'PATCH',
-//   headers: {
-//     'Content-Type': 'application/json'
-//   },
-//   body: JSON.stringify({
-//     brewery: this.state.edit
-//   })
-// }
-// fetch(`API_Breweries/${this.state.edit.id}`, editBrewery)
-//   .then(resp => resp.json())
-//   .then(data => {
-//     this.setState({
-//       showBrewery: data,
-//       edit: {}
-//     })
-//     history.push('/show')
-//   })
