@@ -3,7 +3,7 @@ import { Form, Button, Alert, Container, Row, Col, } from 'react-bootstrap'
 
 import { config } from "../Constants";
 
-const API_Users = config.url.API_Users
+const { API_Users } = config.url
 
 class Login extends Component {
     constructor() {

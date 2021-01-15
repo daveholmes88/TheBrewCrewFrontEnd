@@ -3,11 +3,10 @@ import ReactMapGL, { GeolocateControl, Marker, Popup } from "react-map-gl";
 // import { Link } from 'react-router-dom';
 import { Card, Form, Button, Spinner, Container, Row, Col, Alert } from 'react-bootstrap';
 
-import BreweryCard from './BreweryCard';
+import { BreweryCard } from '../index';
 import { config, Mapbox_Token } from "../Constants";
 
-
-const API_Descriptions = config.url.API_Descriptions
+const { API_Descriptions } = config.url
 
 class BreweriesNearMe extends Component {
   constructor() {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Card, Button, Modal } from 'react-bootstrap';
 import { config } from "../Constants";
 
-const API_Breweries = config.url.API_Breweries
+const { API_Breweries } = config.url
 
 class BreweryCard extends Component {
     constructor() {

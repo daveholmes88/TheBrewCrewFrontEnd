@@ -7,6 +7,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Router } from "react-router-dom";
 import history from "./history";
 
+export { default as Admin } from "./components/Admin";
+export { default as BreweriesNearMe } from './components/BreweriesNearMe';
+export { default as BrewerySearch } from './components/BrewerySearch';
+export { default as BreweryShow } from './components/BreweryShow';
+export { default as BrewNavbar } from './components/Navbar';
+export { default as Login } from './components/Login';
+export { default as ContactUs } from "./components/ContactUs";
+export { default as Edit } from './components/Edit';
+export { default as Home } from './components/Home';
+export { default as NewBrewery } from './components/NewBrewery';
+export { default as BreweryCard } from './components/BreweryCard';
+
 ReactDOM.render(
   <Router history={history}>
     <App />

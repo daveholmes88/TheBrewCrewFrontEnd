@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 
-import Admin from "./components/Admin"
-import BreweriesNearMe from './components/BreweriesNearMe';
-import BrewerySearch from './components/BrewerySearch';
-import BreweryShow from './components/BreweryShow';
-import BrewNavbar from './components/Navbar';
-import Login from './components/Login';
-import ContactUs from "./components/ContactUs"
-import Edit from './components/Edit';
-import Home from './components/Home';
-import NewBrewery from './components/NewBrewery';
+import {
+  Admin,
+  BreweriesNearMe,
+  BrewerySearch,
+  BreweryShow,
+  BrewNavbar,
+  Login,
+  ContactUs,
+  Edit,
+  Home,
+  NewBrewery,
+} from './index'
+
 
 import history from "./history";
 import './App.css';
 
 import { config } from "./Constants";
 
-const API_Ratings = config.url.API_Ratings
-const API_Breweries = config.url.API_Breweries
-const API_Users = config.url.API_Users
-const API_AdminEdits = config.url.API_AdminEdits
+const { API_Ratings, API_Users, API_Breweries, API_AdminEdits } = config.url
+
+// const API_Ratings = config.url.API_Ratings
+// const API_Breweries = config.url.API_Breweries
+// const API_Users = config.url.API_Users
+// const API_AdminEdits = config.url.API_AdminEdits
 
 class App extends Component {
   constructor() {

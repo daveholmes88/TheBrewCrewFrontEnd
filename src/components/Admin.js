@@ -3,10 +3,7 @@ import { Container, Table, Button } from 'react-bootstrap';
 
 import { config } from "../Constants";
 
-const API_Breweries = config.url.API_Breweries
-const API_AdminNew = config.url.API_AdminNew
-const API_Users = config.url.API_Users
-const API_AdminEdits = config.url.API_AdminEdits
+const { API_Breweries, API_AdminNew, API_Users, API_AdminEdits } = config.url
 
 class Admin extends Component {
     constructor() {

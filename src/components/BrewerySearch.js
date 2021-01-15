@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import BreweryCard from './BreweryCard';
 import { Link } from 'react-router-dom';
 import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap';
 
+import { BreweryCard } from '../index';
 
 
 class BrewerySearch extends Component {

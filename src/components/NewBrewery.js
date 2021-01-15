@@ -3,7 +3,7 @@ import { Form, Button, Alert } from 'react-bootstrap';
 
 import { config } from "../Constants";
 
-const API_AdminNew = config.url.API_AdminNew
+const { API_AdminNew } = config.url
 
 class NewBrewery extends Component {
     constructor() {
